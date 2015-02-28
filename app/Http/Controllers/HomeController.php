@@ -30,12 +30,12 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		return view('cms/home');
 	}
 	
 	public function edit()
 	{
-		return view('edit');
+		return view('cms/edit');
 	}
 
 }

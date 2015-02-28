@@ -14,7 +14,7 @@
 Route::get('/', 'WelcomeController@index');
 
 // admin sections/actions
-Route::group(array('prefix' => 'admin'), function()
+Route::group(array('prefix' => 'squadron'), function()
 {
 	Route::get('', 'HomeController@index');
 	Route::get('edit', 'HomeController@edit');

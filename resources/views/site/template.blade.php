@@ -7,7 +7,7 @@
 	<title>Laravel</title>
 
 	<!-- Styles -->
-	<link href="/assets/css/app.css" rel="stylesheet">
+	<link href="/assets/css/bootswatch.css" rel="stylesheet">
 	<link href="/assets/css/squadron.css" rel="stylesheet">
 
 	<!-- Fonts -->

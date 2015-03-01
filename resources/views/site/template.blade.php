@@ -34,8 +34,8 @@
 					<img src="/assets/img/squadron_icon_white.png" alt="Squadron Icon" />
 				</a>
 			</div>
-			<div id="sqn-menu-toggle" class="menu-icon">
-				<span class="glyphicon glyphicon-menu-hamburger"></span>
+			<div class="menu-icon">
+				<span id="sqn-menu-toggle" class="sqn-menu-toggle glyphicon glyphicon-menu-hamburger"></span>
 			</div>
 			<div class="homepage-feature-title">
 				<h1>Squadron</h1>

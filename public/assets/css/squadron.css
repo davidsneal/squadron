@@ -43,14 +43,18 @@ nav {
 	left: -240px;
 }
 
-.sqn-menu, .sqn-menu-push {
-	-webkit-transition: all 0.3s ease;
-	-moz-transition: all 0.3s ease;
-	transition: all 0.3s ease;
+.sqn-menu-toggle-open {
+	transform:rotate(-90deg);
 }
 
 .sqn-menu-open {
 	right:0;
+}
+
+.sqn-menu, .sqn-menu-push, .sqn-menu-toggle {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
 }
 
 header {

@@ -7,6 +7,11 @@ html, body {
 
 nav {
 	overflow-y: scroll;
+	background-color: #f7f7f7;
+}
+
+nav h2 {
+	margin-left:15px;
 }
 
 .sqn-menu {
@@ -20,15 +25,6 @@ nav {
 
 .sqn-menu a {
 	display: block;
-}
-
-.sqn-menu a:hover {
-	background: #258ecd;
-}
-
-.sqn-spmenu a:active {
-	background: #afdefa;
-	color: #47a3da;
 }
 
 .sqn-menu-push {
@@ -80,7 +76,7 @@ header {
 
 .menu-icon {
 	position:absolute;
-	top:30px;
+	top:50px;
 	right:30px;
 	color:#fff;
 	font-size: 30px;

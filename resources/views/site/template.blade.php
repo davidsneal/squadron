@@ -22,10 +22,18 @@
 </head>
 <body class="sqn-menu-push">
 
-<nav class="sqn-menu" id="sqn-menu">
-	<a href="#">Celery seakale</a>
-</nav>
-
+	<nav class="sqn-menu" id="sqn-menu">
+		<h2>Squadron</h2>
+		<a href="#" class="list-group-item active">
+	    	Cras justo odio
+		</a>
+	  	<a href="#" class="list-group-item">
+			Dapibus ac facilisis in
+	  	</a>
+	  	<a href="#" class="list-group-item">
+	  		Morbi leo risus
+	  	</a>
+	</nav>
 
 	<header class="image-bg-fluid-height">
 		<div class="header-content">

@@ -1,5 +1,56 @@
 html, body {
-	margin:0;padding:0;height:100%;
+	margin:0;
+	padding:0;
+	height:100%;
+	overflow-x: hidden;
+}
+
+nav {
+	overflow-y: scroll;
+}
+
+.sqn-menu {
+	position: fixed;
+	width: 240px;
+	height: 100%;
+	top: 0;
+	z-index: 1000;
+	right: -240px;
+}
+
+.sqn-menu a {
+	display: block;
+}
+
+.sqn-menu a:hover {
+	background: #258ecd;
+}
+
+.sqn-spmenu a:active {
+	background: #afdefa;
+	color: #47a3da;
+}
+
+.sqn-menu-push {
+	overflow-x: hidden;
+	position: relative;
+	left: 0;
+}
+
+.sqn-menu-push-open {
+	overflow-x: hidden;
+	position: relative;
+	left: -240px;
+}
+
+.sqn-menu, .sqn-menu-push {
+	-webkit-transition: all 0.3s ease;
+	-moz-transition: all 0.3s ease;
+	transition: all 0.3s ease;
+}
+
+.sqn-menu-open {
+	right:0;
 }
 
 header {
@@ -10,6 +61,26 @@ header {
 .header-content {
 	height:100%;
 	position:relative;
+}
+
+.header-icon {
+	position:absolute;
+	top:30px;
+	left:30px;
+}
+
+.header-icon img {
+	width:75px;
+	height:75px;
+}
+
+.menu-icon {
+	position:absolute;
+	top:30px;
+	right:30px;
+	color:#fff;
+	font-size: 30px;
+	cursor: pointer;
 }
 
 .homepage-feature-title {

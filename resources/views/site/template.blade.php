@@ -20,19 +20,35 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body>
+<body class="sqn-menu-push">
+
+<nav class="sqn-menu" id="sqn-menu">
+	<a href="#">Celery seakale</a>
+</nav>
+
+
 	<header class="image-bg-fluid-height">
 		<div class="header-content">
+			<div class="header-icon">
+				<a href="/">
+					<img src="/assets/img/squadron_icon_white.png" alt="Squadron Icon" />
+				</a>
+			</div>
+			<div id="sqn-menu-toggle" class="menu-icon">
+				<span class="glyphicon glyphicon-menu-hamburger"></span>
+			</div>
 			<div class="homepage-feature-title">
 				<h1>Squadron</h1>
 			</div>
 		</div>
     </header>
-
+	
 	@yield('content')
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="/assets/js/classie.js"></script>
+	<script src="/assets/js/squadron.js"></script>
 </body>
 </html>

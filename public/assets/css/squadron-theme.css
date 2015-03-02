@@ -14,6 +14,10 @@ nav h2 {
 	margin-left:15px;
 }
 
+nav a.list-group-item {
+	border-radius: 0!important;
+}
+
 .sqn-menu {
 	position: fixed;
 	width: 240px;
@@ -95,6 +99,15 @@ header h1 {
 	bottom:10px;
 }
 
+.image-bg-fluid-height {
+	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_large.jpg') no-repeat center center;
+}
+
+.image-bg-fixed-height {
+	background: url('/assets/img/squadron_header_cropped.jpg') no-repeat center;
+    height: 450px;
+}
+
 @media screen and (max-width: 900px) {
     header {
 	    height: 300px;
@@ -133,6 +146,9 @@ header h1 {
 		top:inherit;
 		bottom:0;
 	}
+	.image-bg-fluid-height {
+		background-size: cover;
+	}
 }
 
 @media screen and (min-width: 900px) {
@@ -144,11 +160,20 @@ header h1 {
 	}
 }
 
-.image-bg-fluid-height {
-	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_large.jpg') no-repeat center center;
+@media screen and (min-width: 1900px) {
+   	.image-bg-fluid-height {
+		background-size: cover;
+	}
 }
 
-.image-bg-fixed-height {
-	background: url('/assets/img/squadron_header_cropped.jpg') no-repeat center;
-    height: 450px;
+pre {
+	background-color: #f9f2f4 !important;
+}
+
+code {
+padding: 2px 4px;
+font-size: 90%;
+color: #c7254e !important;
+background-color: #f9f2f4 !important;
+border-radius: 4px;
 }

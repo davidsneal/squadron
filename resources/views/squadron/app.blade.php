@@ -4,20 +4,23 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Laravel</title>
+	<title>{{ Config::get('settings.site_name') }}</title>
 
 	<!-- Styles -->
 	<link href="/assets/css/bootswatch.css" rel="stylesheet">
 	<link href="/assets/css/bootstrap-markdown.min.css" rel="stylesheet">
+	<link href="/assets/css/squadron-admin.css" rel="stylesheet">
 
-	<!-- Fonts -->
+	<!-- Fonts/Icons -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap-markdown.js"></script>
 	<script type="text/javascript" src="/assets/js/markdown.js"></script>
+	<script type="text/javascript" src="/assets/js/squadron-admin.js"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,6 +65,16 @@
 	</nav>
 
 	@yield('content')
+	
+	<!-- Alert div ready if needed -->
+    <div id="custom-alert" class="custom-alert alert">
+      <span id="alert-content"></span>
+    </div>
+    
+    <!-- powered by -->
+    <div class="powered-by">
+      Powered by <a href="http://getsquadron.com" title="Squadron">Squadron</a>
+    </div>
 
 </body>
 </html>

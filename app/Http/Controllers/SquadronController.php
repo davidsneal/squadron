@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-class HomeController extends Controller {
+class SquadronController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
@@ -30,12 +30,12 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('cms/home');
+		return view('squadron/home');
 	}
 	
 	public function edit()
 	{
-		return view('cms/edit');
+		return view('squadron/edit');
 	}
 
 }

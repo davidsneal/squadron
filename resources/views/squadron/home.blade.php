@@ -1,4 +1,4 @@
-@extends('cms/app')
+@extends('squadron/app')
 
 @section('content')
 <div class="container">

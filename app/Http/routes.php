@@ -11,13 +11,27 @@
 |
 */
 
+// patterns
+Route::pattern('year', '[0-9]{4}');
+Route::pattern('month', '[0-9]{2}');
+
 Route::get('/', 'WelcomeController@index');
 
+Route::get('{year}/{month}/{uri}', 'ArticleController@show');
+
 // admin sections/actions
-Route::group(array('prefix' => 'squadron'), function()
+Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 {
-	Route::get('', 'HomeController@index');
-	Route::get('edit', 'HomeController@edit');
+	// squadron cockpit
+	Route::get('', 'SquadronController@index');
+	
+	// articles sections/actions
+	Route::group(array('prefix' => 'article'), function()
+	{
+		Route::get('', 				'ArticleController@index');
+		Route::get('edit/{id?}', 	'ArticleController@edit');
+		Route::post('create', 		'ArticleController@create');
+	});
 });
 
 Route::controllers([

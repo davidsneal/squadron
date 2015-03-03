@@ -38,11 +38,24 @@
 				  	<!-- SEO TAB -->
 				  	<div class="tab-pane fade" id="seo">
 				    	<fieldset>
-					    <div class="form-group">
-					      <label for="uri" class="col-lg-2 control-label">URI</label>
-					      <div class="col-lg-10">
-					        <input type="text" class="form-control" id="uri" name="uri" value="{{ $article['uri'] }}" maxlength="150">
-					      </div>
+					    	<div class="form-group">
+								<label for="uri" class="col-lg-2 control-label">URI</label>
+								<div class="col-lg-10">
+					        	<input type="text" class="form-control" id="uri" name="uri" value="{{ $article['uri'] }}" maxlength="150">
+					    		</div>
+					    	</div>
+					    	<div class="form-group">
+								<label for="seo-title" class="col-lg-2 control-label">Title</label>
+								<div class="col-lg-10">
+					        		<input type="text" class="form-control" id="seo-title" name="seo-title" value="{{ $seo['title'] }}" maxlength="150">
+					    		</div>
+					    	</div>
+					    	<div class="form-group">
+								<label for="seo-description" class="col-lg-2 control-label">Description</label>
+								<div class="col-lg-10">
+									<textarea class="form-control" rows="3" id="seo-description" name="seo-description">{{ $seo['description'] }}</textarea>
+					      		</div>
+					    	</div>
 					    </div>
 					  </fieldset>
 				  	</div>

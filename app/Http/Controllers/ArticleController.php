@@ -3,7 +3,11 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+// custom
 use App\Article;
+use App\Seo;
+
+// laravel
 use Request;
 use Validator;
 use Response;
@@ -37,14 +41,17 @@ class ArticleController extends Controller {
 		// prepare for validation
 		$validator = Validator::make(
 		    array(
-		    	'title' 	=> $data['title'],
-		    	'lead' 		=> $data['lead'],
-		    	'content' 	=> $data['content'],
+		    	'title' 			=> $data['title'],
+		    	'lead' 				=> $data['lead'],
+		    	'content' 			=> $data['content'],
+		    	'seo_title' 		=> $data['seo-title'],
+		    	'seo_description' 	=> $data['seo-description'],
 		    ),
 		    array(
-		    	'title' 	=> 'required|max:150',
-		    	'lead' 		=> 'required',
-		    	'content' 	=> 'required',
+		    	'title' 		=> 'required|max:150',
+		    	'lead' 			=> 'required',
+		    	'content' 		=> 'required',
+		    	'seo_title' 	=> 'max:150',
 		    )
 		);
 
@@ -98,13 +105,15 @@ class ArticleController extends Controller {
 		// if no id is set
 		if(empty($data['id']))
 		{
-			// initiate article class
+			// initiate classes
 			$article = new Article;
+			$seo = new Seo;
 		}
 		// or we're updating an existing article
 		else
 		{
 			$article = Article::find($data['id']);
+			$seo = Seo::find($data['id']);
 		}
 		
 		// prepare data
@@ -113,9 +122,19 @@ class ArticleController extends Controller {
 		$article->lead 		= $data['lead'];
 		$article->content	= $data['content'];
 		
+		// prepare seo data
+		$seo->article_id  	= $data['id'];
+		$seo->page_id  	  	= null;
+		$seo->title 	  	= $data['seo-title'];
+		$seo->description 	= $data['seo-description'];
+		
 		// if article uri is already set
 		if($article->save())
 		{
+			// save the seo data too
+			$seo->save();
+			
+			// return success alert and redirect
 			return Response::json(array(
 				'status' 		=> 'success',
 				'redirect'		=> '/'.Config::get('settings.admin_prefix').'/article/edit/'.$article->id,
@@ -191,9 +210,14 @@ class ArticleController extends Controller {
 		// creating new or editing existing
 		if($id === 0 || ! empty($article))
 		{
+			// get seo data
+			$seo = Seo::find($id);
+
 			$data = [
 				'article' => $article,
+				'seo' 	  => $seo,
 			];
+
 			return response()->view('squadron.edit', $data);
 		}
 		// no article found
@@ -201,8 +225,9 @@ class ArticleController extends Controller {
 		{
 			$data = [
 				'alert_class' 	=> 'warning',
-				'alert_message' => 'Unable to find a post with this ID',
+				'alert_message' => 'Unable to find an article with this ID',
 			];
+
 			return response()->view('squadron.errors.general', $data);
 		}
 	}

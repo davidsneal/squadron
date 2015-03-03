@@ -99,47 +99,79 @@ header h1 {
 	bottom:10px;
 }
 
+header.header-slim {
+	height:100px;
+	background-color: #334466;
+}
+
+header.header-slim .header-icon {
+	top:12px;
+}
+
+header.header-slim .menu-icon {
+	top:32px;
+}
+
 .image-bg-fluid-height {
 	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_large.jpg') no-repeat center center;
 }
 
 .image-bg-fixed-height {
-	background: url('/assets/img/squadron_header_cropped.jpg') no-repeat center;
+	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_cropped.jpg') no-repeat center center;
     height: 450px;
 }
 
 @media screen and (max-width: 900px) {
-    header {
+    header.image-bg-fluid-height {
 	    height: 300px;
     }
-    header h1 {
+    header.large h1 {
 	    font-size:6em;
 	}
 }
 
 @media screen and (max-width: 750px) {
-    header {
+    header.image-bg-fluid-height {
 	    height: 400px;
     }
-    header h1 {
+    header.large h1 {
 	    font-size:5em;
 	}
 }
 
 @media screen and (max-width: 600px) {
-    header {
+    header.image-bg-fluid-height {
 	    height: 500px;
     }
-    header h1 {
+    header.large h1 {
 	    font-size:4em;
+	}
+	header.header-slim {
+		height:80px;
+		background-color: #334466;
+	}
+	
+	header.header-slim .header-icon {
+		left:12px;
+		top:12px;
+	}
+	
+	header.header-slim .header-icon img {
+		height:55px;
+		width:55px;
+	}
+	
+	header.header-slim .menu-icon {
+		top:22px;
+		right:22px;
 	}
 }
 
 @media screen and (max-width: 400px) {
-    header {
+    header.image-bg-fluid-height {
 	    height: 100%;
     }
-    header h1 {
+    header.image-bg-fluid-height h1 {
 	    font-size:3em;
 	}
 	.homepage-feature-title {
@@ -152,16 +184,19 @@ header h1 {
 }
 
 @media screen and (min-width: 900px) {
-    header {
+    header.image-bg-fluid-height {
 	    height: 400px;
     }
-    header h1 {
+    header.image-bg-fluid-height h1 {
 	    font-size:6em;
 	}
 }
 
 @media screen and (min-width: 1900px) {
    	.image-bg-fluid-height {
+		background-size: cover;
+	}
+	.image-bg-fixed-height {
 		background-size: cover;
 	}
 }

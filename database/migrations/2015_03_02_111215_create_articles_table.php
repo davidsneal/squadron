@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration {
 			$table->string('uri', 150)->unique();
 			$table->text('lead');
 			$table->text('content');
-			$table->char('status', 6)->index();			
+			$table->char('status', 9)->default('published')->index();			
 			$table->timestamps();
 		});
 	}

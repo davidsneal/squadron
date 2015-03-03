@@ -122,15 +122,15 @@ class ArticleController extends Controller {
 		$article->lead 		= $data['lead'];
 		$article->content	= $data['content'];
 		
-		// prepare seo data
-		$seo->article_id  	= $data['id'];
-		$seo->page_id  	  	= null;
-		$seo->title 	  	= $data['seo-title'];
-		$seo->description 	= $data['seo-description'];
-		
-		// if article uri is already set
+		// if saved successfully
 		if($article->save())
 		{
+			// prepare seo data
+			$seo->article_id  	= $article->id;
+			$seo->page_id  	  	= null;
+			$seo->title 	  	= $data['seo-title'];
+			$seo->description 	= $data['seo-description'];
+			
 			// save the seo data too
 			$seo->save();
 			
@@ -182,15 +182,19 @@ class ArticleController extends Controller {
 
 		// markup the content
 		$content = Markdown::convertToHtml($article->content);
+		
+		// get the seo data
+		$seo = Seo::find($article->id);
 	
 		// prepare data
 		$data = [
-			'article' => $article,
-			'content' => $content
+			'article' 	=> $article,
+			'content' 	=> $content,
+			'seo'	 	=> $seo
 		];
 
 		// show article
-		return response()->view('site.articles.view', $data); 
+		return response()->view('themes.'.Config::get('settings.admin_prefix').'.articles.view', $data); 
 	}
 
 	/**
@@ -207,11 +211,24 @@ class ArticleController extends Controller {
 		// get article
 		$article = Article::find($id);
 		
-		// creating new or editing existing
-		if($id === 0 || ! empty($article))
+		// creating new
+		if($id === 0)
+		{
+			// get null record set
+			$seo = Seo::find($id);
+			
+			$data = [
+				'article' => $article,
+				'seo' 	  => $seo,
+			];
+
+			return response()->view('squadron.edit', $data);
+		}
+		// editing existing
+		elseif( ! empty($article))
 		{
 			// get seo data
-			$seo = Seo::find($id);
+			$seo = Seo::get_by_article($id);
 
 			$data = [
 				'article' => $article,

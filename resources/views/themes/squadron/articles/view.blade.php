@@ -1,4 +1,12 @@
-@extends('site/template')
+@extends('themes.squadron.main')
+
+@section('title')
+{{ $article->title }}
+@endsection
+
+@section('header')
+	@include('themes.squadron.clips.header_slim')
+@endsection
 
 @section('content')
 <div class="container">

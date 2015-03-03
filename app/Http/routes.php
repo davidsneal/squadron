@@ -22,15 +22,19 @@ Route::get('{year}/{month}/{uri}', 'ArticleController@show');
 // admin sections/actions
 Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 {
-	// squadron cockpit
-	Route::get('', 'SquadronController@index');
-	
-	// articles sections/actions
-	Route::group(array('prefix' => 'article'), function()
+	// authed users only
+	Route::group(['middleware' => 'auth'], function()
 	{
-		Route::get('', 				'ArticleController@index');
-		Route::get('edit/{id?}', 	'ArticleController@edit');
-		Route::post('create', 		'ArticleController@create');
+		// squadron cockpit
+		Route::get('', 'SquadronController@index');
+		
+		// articles sections/actions
+		Route::group(array('prefix' => 'article'), function()
+		{
+			Route::get('', 				'ArticleController@index');
+			Route::get('edit/{id?}', 	'ArticleController@edit');
+			Route::post('create', 		'ArticleController@create');
+		});
 	});
 });
 

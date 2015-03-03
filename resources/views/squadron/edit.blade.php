@@ -35,6 +35,7 @@
 					    </div>
 					  </fieldset>
 				  	</div>
+				  	<!-- END CORE TAB -->
 				  	<!-- SEO TAB -->
 				  	<div class="tab-pane fade" id="seo">
 				    	<fieldset>
@@ -59,6 +60,7 @@
 					    </div>
 					  </fieldset>
 				  	</div>
+				  	<!-- END SEO TAB -->
 				</div>
 			</div>
 		</div>

@@ -10,18 +10,18 @@ class Seo extends Model {
 
 	protected $guarded = ['id'];
 	
-	// get an article from a uri
-    public function scopeGet_by_uri($query, $uri, $id = 0)
+	// get seo from a page id
+    public function scopeGet_by_page($query, $page_id, $id = 0)
     {
-	    return $query->where('uri', '=', $uri)
+	    return $query->where('page_id', '=', $page_id)
 	    			 ->where('id', '!=', $id)
                      ->first();
     }
 
-	// get an article from a title
-    public function scopeGet_by_title($query, $title, $id = 0)
+	// get seo from an article id
+    public function scopeGet_by_article($query, $article_id, $id = 0)
     {
-	    return $query->where('title', '=', $title)
+	    return $query->where('article_id', '=', $article_id)
 	    			 ->where('id', '!=', $id)
                      ->first();
     }

@@ -24,7 +24,16 @@ class ArticleController extends Controller {
 	 */
 	public function index()
 	{
-		//
+		// get articles and paginate
+		$articles = Article::paginate(10);
+
+		// prepare data
+		$data = array(
+						'articles' => $articles,
+				);
+
+		// respond with the page
+		return Response::view('squadron.articles.index', $data);
 	}
 
 	/**
@@ -137,7 +146,7 @@ class ArticleController extends Controller {
 			// return success alert and redirect
 			return Response::json(array(
 				'status' 		=> 'success',
-				'redirect'		=> '/'.Config::get('settings.admin_prefix').'/article/edit/'.$article->id,
+				'redirect'		=> '/'.Config::get('settings.admin_prefix').'/articles/edit/'.$article->id,
 				'message' 		=> 'Article saved',
 				'alert_class' 	=> 'alert-success',
 				));
@@ -222,7 +231,7 @@ class ArticleController extends Controller {
 				'seo' 	  => $seo,
 			];
 
-			return response()->view('squadron.edit', $data);
+			return response()->view('squadron.articles.edit', $data);
 		}
 		// editing existing
 		elseif( ! empty($article))
@@ -235,7 +244,7 @@ class ArticleController extends Controller {
 				'seo' 	  => $seo,
 			];
 
-			return response()->view('squadron.edit', $data);
+			return response()->view('squadron.articles.edit', $data);
 		}
 		// no article found
 		else

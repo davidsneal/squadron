@@ -618,16 +618,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
+                "reference": "c41c218e239b50446fd883acb1ecfd4b770caeae"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
-                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c41c218e239b50446fd883acb1ecfd4b770caeae",
+                "reference": "c41c218e239b50446fd883acb1ecfd4b770caeae",
                 "shasum": ""
             },
             "require": {
@@ -644,6 +644,7 @@
                 "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
+                "swiftmailer/swiftmailer": "~5.3",
                 "videlalvaro/php-amqplib": "~2.4"
             },
             "suggest": {
@@ -660,7 +661,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.12.x-dev"
+                    "dev-master": "1.13.x-dev"
                 }
             },
             "autoload": {
@@ -686,7 +687,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-12-29 21:29:35"
+            "time": "2015-03-05 01:12:12"
         },
         {
             "name": "mtdowling/cron-expression",
@@ -734,16 +735,16 @@
         },
         {
             "name": "nesbot/carbon",
-            "version": "1.14.0",
+            "version": "1.16.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e"
+                "reference": "9b7665041754eaa9bb2622349bc9adbc1cf61cb8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
-                "reference": "bb87460c995d97fe55b39e65f6ffb7f64b0a941e",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/9b7665041754eaa9bb2622349bc9adbc1cf61cb8",
+                "reference": "9b7665041754eaa9bb2622349bc9adbc1cf61cb8",
                 "shasum": ""
             },
             "require": {
@@ -770,13 +771,13 @@
                 }
             ],
             "description": "A simple API extension for DateTime.",
-            "homepage": "https://github.com/briannesbitt/Carbon",
+            "homepage": "http://carbon.nesbot.com",
             "keywords": [
                 "date",
                 "datetime",
                 "time"
             ],
-            "time": "2015-02-06 05:07:29"
+            "time": "2015-03-04 04:50:11"
         },
         {
             "name": "nikic/php-parser",
@@ -1844,16 +1845,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "0.7.0",
+            "version": "0.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "5f5137889b2aec36f8a1009ebe8673dac45f004e"
+                "reference": "7b428e962fb83a13715e057c65c88873d3165df0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/5f5137889b2aec36f8a1009ebe8673dac45f004e",
-                "reference": "5f5137889b2aec36f8a1009ebe8673dac45f004e",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/7b428e962fb83a13715e057c65c88873d3165df0",
+                "reference": "7b428e962fb83a13715e057c65c88873d3165df0",
                 "shasum": ""
             },
             "require": {
@@ -1872,7 +1873,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.7-dev"
+                    "dev-master": "0.8-dev"
                 }
             },
             "autoload": {
@@ -1899,7 +1900,7 @@
                 "markdown",
                 "parser"
             ],
-            "time": "2015-02-16 23:59:27"
+            "time": "2015-03-01 21:29:05"
         },
         {
             "name": "phpdocumentor/reflection-docblock",

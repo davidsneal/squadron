@@ -29,7 +29,7 @@ Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 		Route::get('', 'SquadronController@index');
 		
 		// articles sections/actions
-		Route::group(array('prefix' => 'article'), function()
+		Route::group(array('prefix' => 'articles'), function()
 		{
 			Route::get('', 				'ArticleController@index');
 			Route::get('edit/{id?}', 	'ArticleController@edit');

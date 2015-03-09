@@ -1,60 +1,8 @@
 html, body {
 	margin:0;
-	padding:0;
+	padding:0 0 60px;
 	height:100%;
 	overflow-x: hidden;
-}
-
-nav {
-	overflow-y: scroll;
-	background-color: #f7f7f7;
-}
-
-nav h2 {
-	margin-left:15px;
-}
-
-nav a.list-group-item {
-	border-radius: 0!important;
-}
-
-.sqn-menu {
-	position: fixed;
-	width: 240px;
-	height: 100%;
-	top: 0;
-	z-index: 1000;
-	right: -240px;
-}
-
-.sqn-menu a {
-	display: block;
-}
-
-.sqn-menu-push {
-	overflow-x: hidden;
-	position: relative;
-	left: 0;
-}
-
-.sqn-menu-push-open {
-	overflow-x: hidden;
-	position: relative;
-	left: -240px;
-}
-
-.sqn-menu-toggle-open {
-	transform:rotate(-90deg);
-}
-
-.sqn-menu-open {
-	right:0;
-}
-
-.sqn-menu, .sqn-menu-push, .sqn-menu-toggle {
-	-webkit-transition: all 0.3s ease;
-	-moz-transition: all 0.3s ease;
-	transition: all 0.3s ease;
 }
 
 header {
@@ -78,16 +26,7 @@ header {
 	height:75px;
 }
 
-.menu-icon {
-	position:absolute;
-	top:50px;
-	right:30px;
-	color:#fff;
-	font-size: 30px;
-	cursor: pointer;
-}
-
-.homepage-feature-title {
+.feature-title {
 	position:absolute;
 	top:25%;
 	width:100%;
@@ -99,17 +38,14 @@ header h1 {
 	bottom:10px;
 }
 
-header.header-slim {
-	height:100px;
-	background-color: #334466;
-}
-
-header.header-slim .header-icon {
-	top:12px;
-}
-
-header.header-slim .menu-icon {
-	top:32px;
+header.header-slim:before {
+  position: absolute;
+  content: '';
+  left: 0;
+  top:0;
+  height: 12px !important;
+  width: 100%;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('/assets/img/squadron_header_cropped.jpg') no-repeat top center;
 }
 
 .image-bg-fluid-height {
@@ -117,8 +53,8 @@ header.header-slim .menu-icon {
 }
 
 .image-bg-fixed-height {
-	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_cropped.jpg') no-repeat center center;
-    height: 450px;
+	background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)),url('/assets/img/squadron_header_cropped.jpg') no-repeat top center;
+    height: 315px;
 }
 
 @media screen and (max-width: 900px) {
@@ -148,7 +84,6 @@ header.header-slim .menu-icon {
 	}
 	header.header-slim {
 		height:80px;
-		background-color: #334466;
 	}
 	
 	header.header-slim .header-icon {
@@ -174,7 +109,7 @@ header.header-slim .menu-icon {
     header.image-bg-fluid-height h1 {
 	    font-size:3em;
 	}
-	.homepage-feature-title {
+	.feature-title {
 		top:inherit;
 		bottom:0;
 	}
@@ -187,7 +122,7 @@ header.header-slim .menu-icon {
     header.image-bg-fluid-height {
 	    height: 400px;
     }
-    header.image-bg-fluid-height h1 {
+    header.large h1 {
 	    font-size:6em;
 	}
 }
@@ -201,6 +136,10 @@ header.header-slim .menu-icon {
 	}
 }
 
+.navbar.slim {
+	margin-top: 12px;
+}
+
 pre {
 	background-color: #f9f2f4 !important;
 }
@@ -211,4 +150,26 @@ font-size: 90%;
 color: #c7254e !important;
 background-color: #f9f2f4 !important;
 border-radius: 4px;
+}
+
+footer {
+    text-align: center;
+    padding: 10px!important;
+    position:fixed;
+    width:100%;
+    border-radius: 0!important;
+    bottom:0;
+    left:0;
+    z-index: 10;
+    min-height: 60px;
+    margin-bottom:0;
+    border-top: #dddddd 1px solid;
+    background-color: #fff;
+}
+
+.powered-by {
+	position:fixed;
+	bottom:18px;
+	left:18px;
+	z-index: 15;
 }

@@ -45,15 +45,85 @@ class ArticleController extends Controller {
 			// get articles and paginate
 			$articles = Article::orderBy('created_at', 'desc')->paginate(Config::get('settings.articles_per_page'));
 		}
+		
+		// empty array of urls
+		$urls = [];
+		
+		// loop through the articles
+		foreach($articles as $article)
+		{
+			// add the full url to the array
+			$urls[$article->id] = $this->get_url($article->id);
+		}
 
 		// prepare data
 		$data = array(
-						'articles' => $articles,
-						'search'   => $search,
+						'articles' 	=> $articles,
+						'urls' 		=> $urls,
+						'search'   	=> $search,
 				);
 
 		// respond with the page
 		return Response::view('themes.'.Config::get('settings.active_theme').'.articles.index', $data);
+	}
+	
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function get_url($id = 0)
+	{
+		// typecast if needed
+		$id = (int) $id;
+		
+		// get article
+		$article = Article::find($id);
+		
+		// article not found
+		if( ! isset($article->id))
+		{
+			return Response::json(array(
+				'status' => 'error',
+				'message' => 'Failed to prepare a URL for the article',
+				'alert_class' => 'alert-danger',
+				));
+		}
+		
+		// start url variable
+		$url = '/';
+		
+		// get articles index
+		$index = Config::get('settings.articles_index');
+		
+		// if the index isn't empty
+		if( ! empty($index))
+		{
+			// add it to the url
+			$url .= $index.'/';
+		}
+		
+		// switch based on article_url_structure
+		switch(Config::get('settings.article_url_structure'))
+		{
+			case '{year}/{month}/{uri}':
+			default:
+				
+				// get the month and year the article was created
+				$year = date('Y', strtotime($article->created_at));
+				$month = date('m', strtotime($article->created_at));
+
+				// add to the url
+				$url .= $year.'/'.$month.'/'.$article->uri;
+			break;
+			
+			case '{uri}':
+				$url .= $article->uri;
+			break;
+		}
+
+		// respond with the full
+		return $url;
 	}
 
 	/**
@@ -303,7 +373,7 @@ class ArticleController extends Controller {
 	public function show_YMU($year = 0, $month = 0, $uri = 0)
 	{
 		// check if the article exists already
-		$article = Article::getByUri($uri);
+		$article = Article::getByYMU($year, $month, $uri);
 
 		// 404 if article uri is not found
 		if( ! isset($article->id))
@@ -360,9 +430,14 @@ class ArticleController extends Controller {
 		{
 			// get seo data
 			$seo = Seo::get_by_article($id);
+			
+			// get the URL
+			$url = $this->get_url($id);
 
+			// prepare data
 			$data = [
 				'article' => $article,
+				'url' 	  => $url,
 				'seo' 	  => $seo,
 			];
 

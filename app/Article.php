@@ -17,6 +17,14 @@ class Article extends Model {
 	    			 ->where('id', '!=', $id)
                      ->first();
     }
+    
+    // get an article from year/month/uri
+    public function scopeGetByYMU($query, $year, $month, $uri)
+    {
+	    return $query->where('uri', '=', $uri)
+	    			 ->where('created_at', 'LIKE', $year.'-'.$month.'%')
+                     ->first();
+    }
 
 	// get an article from a title
     public function scopeGetByTitle($query, $title, $id = 0)

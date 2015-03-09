@@ -13,7 +13,7 @@ return [
 	// articles					
 	'articles_index'			=> 'articles', // Listings page for articles, leaving this blank will result in it being used for the homepage
 	'articles_index_heading'	=> 'Articles', // The heading shown on the articles index page
-	'article_url_structure'		=> 'year/month/uri', // URL structure for viewing articles, appended with articles_index if set - 'year/month/uri' or 'uri'
+	'article_url_structure'		=> '{year}/{month}/{uri}', // URL structure for viewing articles, appended with articles_index if set - '{year}/{month}/{uri}' or '{uri'
 	'articles_per_page'			=> 5, // The number of articles to show per page in the frontend
 	'articles_per_page_admin'	=> 10, // The number of articles to show per page in the backend
 ];

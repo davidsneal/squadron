@@ -10,6 +10,9 @@
 				<ul class="nav nav-tabs">
 				  <li class="active"><a href="#core" data-toggle="tab" aria-expanded="true">Core</a></li>
 				  <li class=""><a href="#seo" data-toggle="tab" aria-expanded="false">Seo</a></li>
+				  @if(isset($url))
+				  	<a class="pull-right" href="{{ $url }}"><button class="btn btn-default" type="button">View</button></a>
+				  @endif
 				</ul>
 				<div class="tab-content spacer">
 					<!-- CORE TAB -->

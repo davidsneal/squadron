@@ -15,6 +15,11 @@
 	<link href="/assets/css/squadron-theme.css" rel="stylesheet">
 	<!-- Fonts/icons -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	
+	 <!-- Scripts -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="/assets/js/squadron.js"></script>
 
     @yield('extra_styles')
     
@@ -29,31 +34,21 @@
 
 @section('body')
 
-	<nav class="sqn-menu" id="sqn-menu">
-		<h2>Squadron</h2>
-		<a href="#" class="list-group-item active">
-	    	Cras justo odio
-		</a>
-	  	<a href="#" class="list-group-item">
-			Dapibus ac facilisis in
-	  	</a>
-	  	<a href="#" class="list-group-item">
-	  		Morbi leo risus
-	  	</a>
-	</nav>
-
     @yield('header')
+    
+    @yield('navbar')
 
     @yield('content')
 
-    <!-- Scripts -->
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="/assets/js/classie.js"></script>
-	<script src="/assets/js/squadron.js"></script>
-
     @yield('extra_scripts')
 
-    @yield('footer')
+    <footer>
+	    <div class="powered-by">
+		    Powered by <a href="http://getsquadron.com">Squadron</a>
+		</div>
+		<div class="powered-by">
+		    Powered by <a href="http://getsquadron.com">Squadron</a>
+		</div>
+    </footer>
 
 @stop

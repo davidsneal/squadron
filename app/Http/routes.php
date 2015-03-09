@@ -27,12 +27,12 @@ Route::group(array('prefix' => Config::get('settings.articles_index')), function
 	// switch based on article_url_structure
 	switch(Config::get('settings.article_url_structure'))
 	{
-		case 'year/month/uri':
+		case '{year}/{month}/{uri}':
 		default:
 			Route::get('{year}/{month}/{uri}', 'ArticleController@show_YMU');
 		break;
 		
-		case 'uri':
+		case '{uri}':
 			Route::get('{uri}', 'ArticleController@show_U');
 		break;
 	}

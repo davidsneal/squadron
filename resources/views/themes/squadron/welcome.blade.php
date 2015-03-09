@@ -8,6 +8,10 @@
 	@include('themes.squadron.clips.header_large', ['heading' => $heading])
 @endsection
 
+@section('navbar')
+	@include('themes.squadron.clips.navbar')
+@endsection
+
 @section('content')
 
 <div class="container">

@@ -15,27 +15,29 @@ body {
 .custom-alert {
     text-align: center;
     display:none;
-    padding: 25px!important;
+    padding: 18px!important;
     position:fixed;
     width:100%;
     border-radius: 0!important;
     bottom:0;
     left:0;
     z-index: 999999;
-    min-height: 75px;
+    min-height: 55px;
     margin-bottom:0;
+    font-weight: bold;
+    font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .powered-by {
 	position:fixed;
-	bottom:25px;
-	left:25px;
+	bottom:18px;
+	left:18px;
 	z-index: 15;
 }
 
 .admin-bar {
     text-align: center;
-    padding: 17px!important;
+    padding: 10px!important;
     position:fixed;
     width:100%;
     border-radius: 0!important;
@@ -51,4 +53,15 @@ body {
 .btn-save {
 	width:75px;
 	text-align: center;
+}
+
+.heading-search {
+	margin-top:10px;
+}
+
+.th-table-order {
+	cursor: pointer;
+}
+.th-table-order:hover {
+	color:#4582ec;
 }

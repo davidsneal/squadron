@@ -16,6 +16,45 @@ use Config;
 use Markdown;
 
 class ArticleController extends Controller {
+	
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	 */
+	public function FE_index()
+	{
+		// get search input
+		$search = Request::input('search');
+		
+		// if a search isset an not empty
+		if(isset($search) AND ! empty($search))
+		{
+			// get articles and paginate
+			$articles = Article::where('title', 'LIKE', '%'.$search.'%')
+							   ->orWhere('lead', 'LIKE', '%'.$search.'%')
+							   ->orderBy('created_at', 'desc')
+							   ->paginate(Config::get('settings.articles_per_page'));
+			
+			// append pagination links to maintain search   
+			$articles->appends(['search' => $search]);
+		}
+		// no search set
+		else
+		{
+			// get articles and paginate
+			$articles = Article::orderBy('created_at', 'desc')->paginate(Config::get('settings.articles_per_page'));
+		}
+
+		// prepare data
+		$data = array(
+						'articles' => $articles,
+						'search'   => $search,
+				);
+
+		// respond with the page
+		return Response::view('themes.'.Config::get('settings.active_theme').'.articles.index', $data);
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -24,12 +63,61 @@ class ArticleController extends Controller {
 	 */
 	public function index()
 	{
-		// get articles and paginate
-		$articles = Article::paginate(10);
+		// get inputs
+		$search  = Request::input('search');
+		$order 	 = Request::input('order');
+		$orderBy = Request::input('order-by');
+		
+		// if $orderBy is empty use default
+		if( ! isset($orderBy) OR empty($orderBy))
+		{
+			$orderBy = 'created_at';
+		}
+		
+		// if $order is empty use default
+		if( ! isset($order) OR empty($order))
+		{
+			$order = 'desc';
+		}
+		
+		// if a search isset an not empty
+		if(isset($search) AND ! empty($search))
+		{
+			// get articles and paginate
+			$articles = Article::where('title', 'LIKE', '%'.$search.'%')
+							   ->orWhere('lead', 'LIKE', '%'.$search.'%')
+							   ->orderBy($orderBy, $order)
+							   ->paginate(Config::get('settings.articles_per_page_admin'));
+
+			// append pagination links to maintain search   
+			$articles->appends(['search' => $search]);
+		}
+		// no search set
+		else
+		{
+			// get articles and paginate
+			$articles = Article::orderBy($orderBy, $order)
+							   ->paginate(Config::get('settings.articles_per_page_admin'));
+		}
+		
+		// if $orderBy is set and not empty
+		if(isset($orderBy) AND ! empty($orderBy))
+		{
+			$articles->appends(['order-by' => $orderBy]);
+		}
+		
+		// if $order is set and not empty
+		if(isset($order) AND ! empty($order))
+		{
+			$articles->appends(['order' => $order]);
+		}
 
 		// prepare data
 		$data = array(
 						'articles' => $articles,
+						'search'   => $search,
+						'orderBy'  => $orderBy,
+						'order'    => $order
 				);
 
 		// respond with the page
@@ -86,7 +174,7 @@ class ArticleController extends Controller {
 		}
 		
 		// check if the article exists already
-		$article = Article::get_by_title($data['title'], $data['id']);
+		$article = Article::getByTitle($data['title'], $data['id']);
 
 		// if article title is already set
 		if(isset($article->id))
@@ -99,7 +187,7 @@ class ArticleController extends Controller {
 		}
 		
 		// check if the article exists already
-		$article = Article::get_by_uri($uri, $data['id']);
+		$article = Article::getByUri($uri, $data['id']);
 
 		// if article uri is already set
 		if(isset($article->id))
@@ -171,6 +259,40 @@ class ArticleController extends Controller {
 	{
 		//
 	}
+	
+	/**
+	 * Display the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function show_U($uri = 0)
+	{
+		// check if the article exists already
+		$article = Article::getByUri($uri);
+
+		// 404 if article uri is not found
+		if( ! isset($article->id))
+		{
+			abort(404);
+		}
+
+		// markup the content
+		$content = Markdown::convertToHtml($article->content);
+		
+		// get the seo data
+		$seo = Seo::find($article->id);
+	
+		// prepare data
+		$data = [
+			'article' 	=> $article,
+			'content' 	=> $content,
+			'seo'	 	=> $seo
+		];
+
+		// show article
+		return response()->view('themes.'.Config::get('settings.admin_prefix').'.articles.view', $data); 
+	}
 
 	/**
 	 * Display the specified resource.
@@ -178,10 +300,10 @@ class ArticleController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($year, $month = 0, $uri = 0)
+	public function show_YMU($year = 0, $month = 0, $uri = 0)
 	{
 		// check if the article exists already
-		$article = Article::get_by_uri($uri);
+		$article = Article::getByUri($uri);
 
 		// 404 if article uri is not found
 		if( ! isset($article->id))

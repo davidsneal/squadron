@@ -9,9 +9,9 @@ class Article extends Model {
 	protected $fillable = ['title', 'lead', 'content', 'uri'];
 
 	protected $guarded = ['id'];
-	
+
 	// get an article from a uri
-    public function scopeGet_by_uri($query, $uri, $id = 0)
+    public function scopeGetByUri($query, $uri, $id = 0)
     {
 	    return $query->where('uri', '=', $uri)
 	    			 ->where('id', '!=', $id)
@@ -19,7 +19,7 @@ class Article extends Model {
     }
 
 	// get an article from a title
-    public function scopeGet_by_title($query, $title, $id = 0)
+    public function scopeGetByTitle($query, $title, $id = 0)
     {
 	    return $query->where('title', '=', $title)
 	    			 ->where('id', '!=', $id)

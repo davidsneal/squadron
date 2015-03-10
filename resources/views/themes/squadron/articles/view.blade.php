@@ -34,3 +34,9 @@
 	</div>
 </div>
 @endsection
+
+@if(Auth::check())
+	@section('footer_button')
+		<a href="/{{ Config::get('settings.admin_prefix') }}/articles/edit/{{ $article->id }}"><button type="button" class="btn btn-primary pull-right">Edit</button></a>
+	@endsection
+@endif

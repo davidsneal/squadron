@@ -46,9 +46,7 @@
 	    <div class="powered-by">
 		    Powered by <a href="http://getsquadron.com">Squadron</a>
 		</div>
-		<div class="powered-by">
-		    Powered by <a href="http://getsquadron.com">Squadron</a>
-		</div>
+		@yield('footer_button')
     </footer>
 
 @stop

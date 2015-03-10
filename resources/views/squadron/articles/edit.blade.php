@@ -70,7 +70,16 @@
 	</div>
 	
 	<div class="admin-bar">
-		<button type="submit" class="btn-save btn btn-primary pull-right">Save</button>	    
+		<button type="submit" class="btn-save btn btn-primary pull-right">Save</button>	
+		<div class="form-inline pull-right">
+	      <div class="col-lg-10">
+	        <select class="form-control" id="select" name="status">
+	          <option value="Published" {{ (isset($article->status) && $article->status == 'Published' ? 'selected' : null) }}>Published</option>
+	          <option value="Draft" {{ (isset($article->status) && $article->status == 'Draft' ? 'selected' : null) }}>Draft</option>
+	          <option value="Deleted" {{ (isset($article->status) && $article->status == 'Deleted' ? 'selected' : null) }}>Deleted</option>
+	        </select>
+	      </div>
+	    </div>    
 	</div>
 
 </form>

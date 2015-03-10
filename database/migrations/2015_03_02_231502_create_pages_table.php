@@ -21,6 +21,7 @@ class CreatePagesTable extends Migration {
 			$table->text('content');
 			$table->char('status', 9)->default('published')->index();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

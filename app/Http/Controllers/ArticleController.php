@@ -31,7 +31,8 @@ class ArticleController extends Controller {
 		if(isset($search) AND ! empty($search))
 		{
 			// get articles and paginate
-			$articles = Article::where('title', 'LIKE', '%'.$search.'%')
+			$articles = Article::where('status', '=', 'Published')
+							   ->where('title', 'LIKE', '%'.$search.'%')
 							   ->orWhere('lead', 'LIKE', '%'.$search.'%')
 							   ->orderBy('created_at', 'desc')
 							   ->paginate(Config::get('settings.articles_per_page'));
@@ -43,7 +44,9 @@ class ArticleController extends Controller {
 		else
 		{
 			// get articles and paginate
-			$articles = Article::orderBy('created_at', 'desc')->paginate(Config::get('settings.articles_per_page'));
+			$articles = Article::where('status', '=', 'Published')
+							   ->orderBy('created_at', 'desc')
+							   ->paginate(Config::get('settings.articles_per_page'));
 		}
 		
 		// empty array of urls
@@ -208,6 +211,7 @@ class ArticleController extends Controller {
 		// prepare for validation
 		$validator = Validator::make(
 		    array(
+		    	'status' 			=> $data['status'],
 		    	'title' 			=> $data['title'],
 		    	'lead' 				=> $data['lead'],
 		    	'content' 			=> $data['content'],
@@ -215,6 +219,7 @@ class ArticleController extends Controller {
 		    	'seo_description' 	=> $data['seo-description'],
 		    ),
 		    array(
+		    	'status' 		=> 'required|max:9',
 		    	'title' 		=> 'required|max:150',
 		    	'lead' 			=> 'required',
 		    	'content' 		=> 'required',
@@ -284,6 +289,7 @@ class ArticleController extends Controller {
 		}
 		
 		// prepare data
+		$article->status	= $data['status'];
 		$article->title		= $data['title'];
 		$article->uri 		= $uri;
 		$article->lead 		= $data['lead'];
@@ -341,8 +347,8 @@ class ArticleController extends Controller {
 		// check if the article exists already
 		$article = Article::getByUri($uri);
 
-		// 404 if article uri is not found
-		if( ! isset($article->id))
+		// 404 if article uri is not found or not published
+		if( ! isset($article->id) OR $article->status != 'Published')
 		{
 			abort(404);
 		}
@@ -375,8 +381,8 @@ class ArticleController extends Controller {
 		// check if the article exists already
 		$article = Article::getByYMU($year, $month, $uri);
 
-		// 404 if article uri is not found
-		if( ! isset($article->id))
+		// 404 if article uri is not found or not published
+		if( ! isset($article->id) OR $article->status != 'Published')
 		{
 			abort(404);
 		}
@@ -431,15 +437,18 @@ class ArticleController extends Controller {
 			// get seo data
 			$seo = Seo::get_by_article($id);
 			
-			// get the URL
-			$url = $this->get_url($id);
-
 			// prepare data
 			$data = [
 				'article' => $article,
-				'url' 	  => $url,
-				'seo' 	  => $seo,
+				'seo' 	  => $seo
 			];
+			
+			// if the article is published
+			if($article->status == 'Published')
+			{
+				// get and add the URL
+				$data['url'] = $this->get_url($id);
+			}
 
 			return response()->view('squadron.articles.edit', $data);
 		}

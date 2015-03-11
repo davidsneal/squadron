@@ -12,10 +12,7 @@
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				@if (Auth::check())
-					<li><a href="/{{ Config::get('settings.admin_prefix') }}">Base</a></li>
-					<li><a href="/{{ Config::get('settings.admin_prefix') }}/articles">Articles</a></li>
-				@endif
+				<li><a href="/{{ Config::get('settings.articles_index') }}">Articles</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">

@@ -82,9 +82,6 @@ header.header-slim:before {
     header.large h1 {
 	    font-size:4em;
 	}
-	header.header-slim {
-		height:80px;
-	}
 	
 	header.header-slim .header-icon {
 		left:12px;

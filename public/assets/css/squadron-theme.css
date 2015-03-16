@@ -45,7 +45,7 @@ header.header-slim:before {
   top:0;
   height: 12px !important;
   width: 100%;
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('/assets/img/squadron_header_cropped.jpg') no-repeat top center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),url('/assets/img/squadron_header_border.jpg') no-repeat top center;
 }
 
 .image-bg-fluid-height {
@@ -131,6 +131,10 @@ header.header-slim:before {
 	.image-bg-fixed-height {
 		background-size: cover;
 	}
+}
+
+.navbar {
+	border-radius: 0;
 }
 
 .navbar.slim {

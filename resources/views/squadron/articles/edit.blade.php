@@ -1,7 +1,7 @@
 @extends('squadron/app')
 
 @section('content')
-<form id="post-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/articles/create">
+<form id="post-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/articles/create" role="form" data-toggle="validator">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="hidden" name="id" value="{{ $article['id'] }}">
 	<div class="container-fluid">
@@ -19,21 +19,24 @@
 					<div class="tab-pane fade active in" id="core">
 					  	<fieldset>
 					    <div class="form-group">
-					      <label for="title" class="col-lg-2 control-label">Title</label>
+					      <label for="title" class="col-lg-2 control-label label-required">Title</label>
 					      <div class="col-lg-10">
 					        <input type="text" class="form-control" id="title" name="title" value="{{ $article['title'] }}" maxlength="150" required>
+					        <div class="help-block with-errors"></div>
 					      </div>
 					    </div>
 						<div class="form-group">
-					      <label for="lead" class="col-lg-2 control-label">Lead</label>
+					      <label for="lead" class="col-lg-2 control-label label-required">Lead</label>
 					      <div class="col-lg-10">
 					        <textarea class="form-control" rows="3" id="lead" name="lead" required>{{ $article['lead'] }}</textarea>
+					        <div class="help-block with-errors"></div>
 					      </div>
 					    </div>
 					    <div class="form-group">
-					      <label for="content" class="col-lg-2 control-label">Content</label>
+					      <label for="content" class="col-lg-2 control-label label-required">Content</label>
 					      <div class="col-lg-10">
 					        <textarea class="form-control" name="content" data-provide="markdown" rows="15" required>{{ $article['content'] }}</textarea>
+					        <div class="help-block with-errors"></div>
 					      </div>
 					    </div>
 					  </fieldset>

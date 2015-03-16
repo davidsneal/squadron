@@ -42,9 +42,9 @@ Route::group(array('prefix' => Config::get('settings.articles_index')), function
 Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 {
 	// authed users only
-	Route::group(['middleware' => 'auth'], function()
+	Route::group(['middleware' => ['admin', 'auth']], function()
 	{
-		// squadron cockpit
+		// squadron base
 		Route::get('', 'SquadronController@index');
 		
 		// articles sections/actions

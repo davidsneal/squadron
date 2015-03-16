@@ -35,7 +35,7 @@ class RedirectIfAuthenticated {
 	{
 		if ($this->auth->check())
 		{
-			return new RedirectResponse(url('/squadron'));
+			return new RedirectResponse(url('/'.Config::get('settings.admin_prefix')));
 		}
 
 		return $next($request);

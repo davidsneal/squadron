@@ -4,7 +4,18 @@ return [
 	// core
 	'site_name' 				=> 'Squadron', // The name of the website
 	'admin_prefix' 				=> 'squadron', // Link to admin area
-	'active_theme' 				=> 'squadron', // The theme active for the website
+	'active_theme' 				=> 'squadron', // The active theme for the frontend
+	
+	// users
+	'allow_public_registration' => true, // allow users to signup to your website
+	'new_register_redirect' 	=> '/', // the url to redirect newly registered users to
+	'non_admin_login_redirect' 	=> '/', // the url to redirect newly registered users to
+	
+	// asset management
+	'asset_accepted_extensions'	=> [
+		'jpg', 'jpeg', 'png', 'gif', 'pdf', 'csv', 'doc', 'docx', 'xls', 'xlsx', 'odt', 'ods'
+	], // an array of accepted file extensions
+	'asset_max_filesize'		=> '50M', // the maximum filesize to accept, check your PHP settings
 								
 	// theme					
 	'site_logo'					=> '/assets/img/squadron_icon_white.png', // The site logo

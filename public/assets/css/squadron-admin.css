@@ -55,6 +55,12 @@ body {
 	text-align: center;
 }
 
+/* Edit screen */
+.label-required:after {
+	content: " *";
+	color: #d9534f;
+}
+
 .heading-search {
 	margin-top:10px;
 }

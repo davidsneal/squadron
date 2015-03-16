@@ -149,6 +149,7 @@ return [
 		 * Custom additions
 		 */
 		'GrahamCampbell\Markdown\MarkdownServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider'
 
 	],
 
@@ -177,6 +178,7 @@ return [
 		'Crypt'     => 'Illuminate\Support\Facades\Crypt',
 		'DB'        => 'Illuminate\Support\Facades\DB',
 		'Eloquent'  => 'Illuminate\Database\Eloquent\Model',
+		'Entrust' 	=> 'Zizaco\Entrust\EntrustFacade',
 		'Event'     => 'Illuminate\Support\Facades\Event',
 		'File'      => 'Illuminate\Support\Facades\File',
 		'Hash'      => 'Illuminate\Support\Facades\Hash',

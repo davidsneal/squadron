@@ -20,7 +20,6 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap-markdown.js"></script>
 	<script type="text/javascript" src="/assets/js/markdown.js"></script>
-	<script type="text/javascript" src="/assets/js/squadron-admin.js"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +50,9 @@
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="/auth/login">Login</a></li>
-						<li><a href="/auth/register">Register</a></li>
+						@if(Config::get('settings.allow_public_registration') === true)
+							<li><a href="/auth/register">Register</a></li>
+						@endif
 					@else
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
@@ -76,6 +77,10 @@
     <div class="powered-by">
       Powered by <a href="http://getsquadron.com" title="Squadron">Squadron</a>
     </div>
+    
+	<!-- extra scripts -->
+	<script type="text/javascript" src="/assets/js/squadron-admin.js"></script>
+	<script type="text/javascript" src="/assets/js/validator.js"></script>
 
 </body>
 </html>

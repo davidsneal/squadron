@@ -150,7 +150,6 @@ return [
 		 */
 		'GrahamCampbell\Markdown\MarkdownServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
-		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'App\Providers\SquadronServiceProvider'
 
 	],

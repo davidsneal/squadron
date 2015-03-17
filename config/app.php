@@ -149,7 +149,9 @@ return [
 		 * Custom additions
 		 */
 		'GrahamCampbell\Markdown\MarkdownServiceProvider',
-		'Zizaco\Entrust\EntrustServiceProvider'
+		'Zizaco\Entrust\EntrustServiceProvider',
+		'Illuminate\Workbench\WorkbenchServiceProvider',
+		'App\Providers\SquadronServiceProvider'
 
 	],
 

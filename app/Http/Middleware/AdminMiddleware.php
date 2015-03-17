@@ -3,6 +3,9 @@
 use Closure;
 use View;
 
+// squadron helper
+use App\Helpers\Squadron;
+
 class AdminMiddleware {
 
 	/**
@@ -15,21 +18,15 @@ class AdminMiddleware {
 	public function handle($request, Closure $next)
 	{
 		// if user has access
-		if(\Entrust::hasRole('admin') OR \Entrust::hasRole('super_admin'))
+		if(\Entrust::can('access_squadron'))
 		{
 			// continue
 			return $next($request);
 		}
 		else
 		{
-			// prepare data
-			$data = [
-				'alert_class' 	=> 'danger',
-				'alert_message' => 'You do not have sufficient rights to access this page'
-			];
-
-			// return error view
-			return response()->view('squadron.errors.general', $data);
+			// permissions error
+			return Squadron::permissionsError('access_squadron');
 		}
 	}
 

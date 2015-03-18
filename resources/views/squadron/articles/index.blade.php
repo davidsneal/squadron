@@ -1,4 +1,4 @@
-@extends('squadron/app')
+@extends('squadron.app')
 
 @section('content')
 <div class="container-fluid">
@@ -7,7 +7,7 @@
 			<h1 class="pull-left heading-search">Articles</h1>
 			<form class="navbar-form pull-right" role="search" action="" method="get">
 		        <div class="form-group">
-		        	<input name="search" type="text" class="form-control" placeholder="Search">
+		        	<input name="search" type="text" class="form-control" placeholder="Search" value="{{ $search }}">
 		        </div>
 		        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
 		    </form>

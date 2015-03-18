@@ -5,16 +5,16 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>{{ Config::get('settings.site_name') }}</title>
+	
+	<!-- Fonts/Icons -->
+	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 	<!-- Styles -->
 	<link href="/assets/css/bootswatch.css" rel="stylesheet">
 	<link href="/assets/css/bootstrap-markdown.min.css" rel="stylesheet">
 	<link href="/assets/css/squadron-admin.css" rel="stylesheet">
 
-	<!-- Fonts/Icons -->
-	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
@@ -44,8 +44,15 @@
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					<li><a href="/{{ Config::get('settings.admin_prefix') }}">Base</a></li>
-					<li><a href="/{{ Config::get('settings.admin_prefix') }}/articles">Articles</a></li>
+					@if(Entrust::can('access_squadron'))
+						<li><a href="/{{ Config::get('settings.admin_prefix') }}">Base</a></li>
+					@endif
+					@if(Entrust::can('access_assets'))
+						<li><a href="/{{ Config::get('settings.admin_prefix') }}/assets">Assets</a></li>
+					@endif
+					@if(Entrust::can('access_articles'))
+						<li><a href="/{{ Config::get('settings.admin_prefix') }}/articles">Articles</a></li>
+					@endif
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

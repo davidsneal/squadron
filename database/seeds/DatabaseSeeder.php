@@ -20,9 +20,9 @@ class DatabaseSeeder extends Seeder {
 		$user = new App\User();
 		
 		// SET THESE DETAILS HERE FOR FIRST SUPER ADMIN USER
-		$user->name 	= '';
-		$user->email 	= '';
-		$user->password = Hash::make('');
+		$user->name 	= 'David Neal';
+		$user->email 	= 'me@davidsneal.co.uk';
+		$user->password = Hash::make('password');
 		// SET THESE DETAILS HERE FOR FIRST SUPER ADMIN USER
 		
 		// save first user
@@ -115,12 +115,19 @@ class DatabaseSeeder extends Seeder {
 		
 		//------------------------------ ASSETS ----------------------------------------//
 		
-		// can use assets
-		$permUseAssets = new App\Permission();
-		$permUseAssets->name         = 'use_assets';
-		$permUseAssets->display_name = 'Use Assets';
-		$permUseAssets->description  = 'Use assets';
-		$permUseAssets->save();
+		// can access assets
+		$permAccessAssets = new App\Permission();
+		$permAccessAssets->name         = 'access_assets';
+		$permAccessAssets->display_name = 'Access Assets';
+		$permAccessAssets->description  = 'Access assets';
+		$permAccessAssets->save();
+		
+		// can add/edit folders
+		$permManageAssetFolders = new App\Permission();
+		$permManageAssetFolders->name         = 'manage_asset_folders';
+		$permManageAssetFolders->display_name = 'Manage Asset Folders';
+		$permManageAssetFolders->description  = 'Manage Asset Folders';
+		$permManageAssetFolders->save();
 		
 		// can upload assets
 		$permUploadAssets = new App\Permission();
@@ -196,7 +203,8 @@ class DatabaseSeeder extends Seeder {
 								$permDeleteArticles,
 								
 								// assets
-								$permUseAssets,
+								$permAccessAssets,
+								$permManageAssetFolders,
 								$permUploadAssets,
 								$permDeleteAssets
 							));
@@ -217,7 +225,8 @@ class DatabaseSeeder extends Seeder {
 								$permDeleteArticles,
 								
 								// assets
-								$permUseAssets,
+								$permAccessAssets,
+								$permManageAssetFolders,
 								$permUploadAssets,
 								$permDeleteAssets
 							));
@@ -234,7 +243,8 @@ class DatabaseSeeder extends Seeder {
 								$permDeleteArticles,
 								
 								// assets
-								$permUseAssets,
+								$permAccessAssets,
+								$permManageAssetFolders,
 								$permUploadAssets,
 								$permDeleteAssets
 							));
@@ -249,7 +259,7 @@ class DatabaseSeeder extends Seeder {
 								$permManageDraftArticles,
 								
 								// assets
-								$permUseAssets,
+								$permAccessAssets,
 								$permUploadAssets,
 							));
 	}

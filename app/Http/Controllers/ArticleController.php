@@ -3,10 +3,8 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-// squadron helper
+// squadron
 use App\Helpers\Squadron;
-
-// custom
 use App\Article;
 use App\Seo;
 
@@ -143,10 +141,7 @@ class ArticleController extends Controller {
 	{
 		// access check
 		if( ! Entrust::can('access_articles'))
-		{
-			// permissions error
 			return Squadron::permissionsError('access_articles');
-		}
 
 		// get inputs
 		$search  = Request::input('search');
@@ -426,10 +421,7 @@ class ArticleController extends Controller {
 	{
 		// access check
 		if( ! Entrust::can('manage_draft_articles'))
-		{
-			// permissions error
 			return Squadron::permissionsError('manage_draft_articles');
-		}
 
 		// typecast if needed
 		$id = (int) $id;

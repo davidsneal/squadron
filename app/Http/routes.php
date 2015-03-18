@@ -47,6 +47,14 @@ Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 		// squadron base
 		Route::get('', 'SquadronController@index');
 		
+		// assets sections/actions
+		Route::group(array('prefix' => 'assets'), function()
+		{
+			Route::get('', 				'AssetsFolderController@index');
+			Route::get('folder/{id}', 	'AssetsFolderController@show');
+			Route::post('create', 		'AssetsFolderController@create');
+		});
+		
 		// articles sections/actions
 		Route::group(array('prefix' => 'articles'), function()
 		{

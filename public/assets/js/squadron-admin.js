@@ -2,9 +2,9 @@ jQuery( document ).ready( function( $ ) {
 
     //---------------------------------------------------------------------------------------//
     //
-    //  POST CREATE/EDIT
+    //  ARTICLE CREATE/EDIT
     //
-    $( '#post-edit' ).validator().on( 'submit', function(e) {
+    $( '#article-edit' ).validator().on( 'submit', function(e) {
 	    
 	     // form failed validation
 	    if (e.isDefaultPrevented()) {
@@ -22,7 +22,59 @@ jQuery( document ).ready( function( $ ) {
 	        $.post(
 	            $( this ).prop( 'action' ),
 	            {
-	                data: $("#post-edit").serialize(),
+	                data: $("#article-edit").serialize(),
+	                "_token": $( this ).find( 'input[name=_token]' ).val()
+	            },
+	            function( data ) {
+	                //do something with data/response returned by server
+	
+	                // clear possible classes for the alert
+	                $('#custom-alert').removeClass( 'alert-danger alert-success alert-warning' );
+	
+	                // set alert
+	                $("#alert-content").html( data.message );
+	                $('#custom-alert').addClass( data.alert_class );
+	                $('#custom-alert').fadeIn(100).delay(2500).fadeOut(200);
+	                
+	                // if successful
+	                if( data.status === 'success' )
+	                {
+	                    // delay then redirect
+	                    setTimeout(function(){ window.location = data.redirect; }, 1500);
+	                }
+	                else
+	                {
+	                    $("button.btn-save").html('Save');
+	                }
+	            },
+	            'json'
+	        ); // end post
+	    } // end else for validation pass
+    } ); // end form submit
+    
+    //---------------------------------------------------------------------------------------//
+    //
+    //  FOLDER ADD/EDIT
+    //
+    $( '#folder-edit' ).validator().on( 'submit', function(e) {
+	    
+	     // form failed validation
+	    if (e.isDefaultPrevented()) {
+			// do nothing
+		} else {
+
+	        // don't submit the form
+	        e.preventDefault();
+	
+	        //.....
+	        //show some spinner etc to indicate operation in progress
+	        //.....
+	        $("button.btn-save").html('<i class="fa fa-spinner fa-spin"></i>');
+	 
+	        $.post(
+	            $( this ).prop( 'action' ),
+	            {
+	                data: $("#folder-edit").serialize(),
 	                "_token": $( this ).find( 'input[name=_token]' ).val()
 	            },
 	            function( data ) {

@@ -71,3 +71,22 @@ body {
 .th-table-order:hover {
 	color:#4582ec;
 }
+
+/* assets */
+.add-folder-btn {
+	margin-right:10px;
+}
+.assets-list {
+	list-style: none;
+	padding: 0;
+}
+.assets-folder-li {
+	width:120px;
+	display: inline-block;
+	vertical-align: top;
+	text-align: center;
+	margin: 0 20px 20px 0;
+}
+.assets-folder-icon {
+	font-size: 6em;
+}

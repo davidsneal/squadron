@@ -4,7 +4,13 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
-			<h1 class="pull-left heading-search">Assets</h1>
+			<h1 class="pull-left heading-search">
+				@if($folder->id)
+					{{ $folder->name }}
+				@else
+					Assets
+				@endif
+			</h1>
 			<form class="navbar-form pull-right" role="search" action="" method="get">
 		        <div class="form-group">
 		        	<input name="search" type="text" class="form-control" placeholder="Search" value="{{ $search }}">
@@ -13,11 +19,19 @@
 		    </form>
 		</div>
 	</div>
+	
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
-			@foreach($breadcrumbs as $breadcrumb)
-				<span class="text-muted">{!! var_dump($breadcrumb) !!}</span>
-			@endforeach
+			<ul class="breadcrumb">
+				<li><a href="/{{ Config('settings.admin_prefix') }}/assets">Assets</a></li> 
+				@foreach($parents as $name => $id)
+					@if($id !== $folder->id)
+						<li><a href="/{{ Config('settings.admin_prefix') }}/assets/folder/{{ $id }}">{{ $name }}</a></li>
+					@else
+						<li class="active">{{ $name }}</li>
+					@endif
+				@endforeach
+			</ul>
 		</div>
 	</div>
 	<div class="row">
@@ -29,10 +43,10 @@
 
 <div class="admin-bar">
 	@if(Entrust::can('upload_assets'))
-		<button data-toggle="modal" data-target="#addAssetModal" data-folder-id="{{ $folder_id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset</button>
+		<button data-toggle="modal" data-target="#addAssetModal" data-folder-id="{{ $folder->id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset</button>
 	@endif
 	@if(Entrust::can('manage_asset_folders'))
-		<button data-toggle="modal" data-target="#addFolderModal" data-folder-id="{{ $folder_id }}" class="add-folder-btn btn btn-primary pull-right">Add Folder</button>
+		<button data-toggle="modal" data-target="#addFolderModal" data-folder-id="{{ $folder->id }}" class="add-folder-btn btn btn-primary pull-right">Add Folder</button>
 	@endif
 </div>
 
@@ -69,7 +83,7 @@
       </div>
       <div class="modal-body">
 			<input type="hidden" name="_token" value="{{ csrf_token() }}">
-			<input type="hidden" name="parent-folder-id" value="{{ $folder_id }}">
+			<input type="hidden" name="parent-folder-id" value="{{ $folder->id }}">
 			<fieldset>
 			    <div class="form-group">
 			      <label for="title" class="col-lg-2 control-label label-required">Name</label>

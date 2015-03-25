@@ -18,6 +18,9 @@ use Markdown;
 use Entrust;
 
 class AssetsFolderController extends Controller {
+	
+	// variables
+	public $parents = [];
 
 	/**
 	 * Display a listing of the resource.
@@ -37,7 +40,7 @@ class AssetsFolderController extends Controller {
 		if(isset($search) AND ! empty($search))
 		{
 			// folders that match search
-			$folders = AssetsFolder::where('name', 'LIKE', '%'.$search.'%')
+			$children = AssetsFolder::where('name', 'LIKE', '%'.$search.'%')
 							   	   ->orWhere('desc', 'LIKE', '%'.$search.'%')
 							   	   ->orderBy('name')
 							   	   ->get();
@@ -52,7 +55,7 @@ class AssetsFolderController extends Controller {
 		else
 		{
 			// get top level folders
-			$folders = AssetsFolder::where('parent_folder_id', '=', null)
+			$children = AssetsFolder::where('parent_folder_id', '=', null)
 							   	   ->orderBy('name')
 							   	   ->get();
 							   	   
@@ -64,11 +67,11 @@ class AssetsFolderController extends Controller {
 		
 		// return assets index
 		return Response::view('squadron.assets.contents', [
-											'folder_id'   => null,
-											'folders' 	  => $folders,
-											'assets'  	  => $assets,
-											'search'  	  => $search,
-											'breadcrumbs' => ['Assets']
+											'folder'	=> new AssetsFolder,
+											'children' 	=> $children,
+											'assets'  	=> $assets,
+											'search'  	=> $search,
+											'parents'	=> []
 											]);
 	}
 
@@ -167,9 +170,12 @@ class AssetsFolderController extends Controller {
 		// access check
 		if( ! Entrust::can('access_assets'))
 			return Squadron::permissionsError('access_assets');
+			
+		// get the folder being viewed
+		$folder = AssetsFolder::find($id);
 	
 		// get child folders
-		$folders = AssetsFolder::where('parent_folder_id', '=', $id)
+		$children = AssetsFolder::where('parent_folder_id', '=', $id)
 						   	   ->orderBy('name')
 						   	   ->get();
 						   	   
@@ -177,48 +183,50 @@ class AssetsFolderController extends Controller {
 		$assets = Asset::where('assets_folder_id', '=', $id)
 					   ->orderBy('name')
 					   ->get();
+					   
+		// get all parents ready
+		$this->getParents($id);
 
 		// return assets folder
 		return Response::view('squadron.assets.contents', [
-											'folder_id' => $id,
-											'folders' 	=> $folders,
+											'folder' 	=> $folder,
+											'children' 	=> $children,
 											'assets'  	=> $assets,
 											'search'  	=> null,
-											'breadcrumbs' => $this->getBreadcrumbs($id)
+											'parents' 	=> array_reverse($this->parents)
 											]);
 	}
 	
 	/**
-	 * Get an array to use as breadcrumbs
+	 * Get an array of parent folders
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	private function getBreadcrumbs($folder_id)
+	private function getParents($folder_id)
 	{
-		// define breadcrumbs array
-		$breadcrumbs = [];
+		// typecast to be safe
+		$folder_id = (int)$folder_id;
 
 		// get the folder provided
 		$folder = AssetsFolder::find($folder_id);
-		
+	
 		// if no matching folder was found stop there
 		if( ! $folder->id)
-			return $breadcrumbs;
+			return $this->parents;
 			
-		// add the folder to the breadcrumbs
-		$breadcrumbs[$folder->id]['id'] = $folder->id;
-		$breadcrumbs[$folder->id]['name'] = $folder->name;
-			
+		// add the folder to the array of parents
+		$this->parents[$folder->name] =  $folder->id;
+
 		// if there's a parent folder
 		if( ! empty($folder->parent_folder_id))
-		{
+		{			
 			// call the function recursively to add it to the array
-			$breadcrumbs[] = $this->getBreadcrumbs($folder->parent_folder_id);
+			$this->getParents($folder->parent_folder_id);
 		}
 
-		// return assets folder
-		return $breadcrumbs;
+		// return
+		return true;
 	}
 
 	/**

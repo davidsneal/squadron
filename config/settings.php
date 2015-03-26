@@ -16,7 +16,7 @@ return [
 	'asset_accepted_extensions'		=> [
 		'jpg', 'jpeg', 'png', 'gif', 'pdf', 'csv', 'doc', 'docx', 'xls', 'xlsx', 'odt', 'ods'
 	], // an array of accepted file extensionsassets/js/squadron-admin.js too
-	'asset_max_filesize'			=> '50M', // the maximum filesize to accept, check your PHP settings
+	'asset_max_filesize'			=> 50000, // the maximum filesize in kb to accept, you may need to check your PHP settings
 									
 	// theme						
 	'site_logo'						=> '/assets/img/squadron_icon_white.png', // The site logo

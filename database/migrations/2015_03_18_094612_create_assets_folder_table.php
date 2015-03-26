@@ -19,6 +19,7 @@ class CreateAssetsFolderTable extends Migration {
 			$table->string('name', 45);
 			$table->string('desc', 125)->nullable();
 			$table->string('dirpath', 400)->nullable();
+			$table->string('publicpath', 400)->nullable();
 			$table->timestamps();
 		});
 	}

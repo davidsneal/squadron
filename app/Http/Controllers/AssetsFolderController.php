@@ -140,13 +140,16 @@ class AssetsFolderController extends Controller {
 			$parent = AssetsFolder::where('id', '=', $data['parent-folder-id'])->first();
 	
 			// start with parents filepath
-			$path = $parent->dirpath;
+			$dirpath = $parent->dirpath;
 			
 			// finish with new folder name
-			$path.= str_slug($data['name'], "_").'/';
+			$dirpath.= str_slug($data['name'], "_").'/';
 			
 			// add filepath
-			$folder->dirpath = $path;
+			$folder->dirpath = $dirpath;
+			
+			// add public path
+			$folder->publicpath = $parent->publicpath.str_slug($data['name'], "_").'/';
 		}
 		// there is not a parent folder
 		else
@@ -155,13 +158,16 @@ class AssetsFolderController extends Controller {
 			$folder->parent_folder_id = null;
 			
 			// start filepath
-			$path = public_path().Config::get('settings.asset_upload_directory');
+			$dirpath = public_path().Config::get('settings.asset_upload_directory');
 			
 			// continue filepath
-			$path.= str_slug($data['name'], "_").'/';
+			$dirpath.= str_slug($data['name'], "_").'/';
 			
 			// add filepath
-			$folder->dirpath = $path;
+			$folder->dirpath = $dirpath;
+			
+			// add public path
+			$folder->publicpath = Config::get('settings.asset_upload_directory').str_slug($data['name'], "_").'/';
 		}
 
 		// other variables
@@ -172,7 +178,7 @@ class AssetsFolderController extends Controller {
 		if($folder->save())
 		{
 			// make new directory
-			if(File::makeDirectory($path))
+			if(@File::makeDirectory($dirpath))
 			{			
 				// commit to the DB
 				DB::commit();

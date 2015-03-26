@@ -24,7 +24,7 @@ class CreateAssetsTable extends Migration {
 			$table->string('alt', 45)->nullable();
 			$table->string('filetype', 10);
 			$table->string('extension', 10);
-			$table->string('filepath', 400);
+			$table->string('url', 400);
 			$table->timestamps();
 		});
 	}

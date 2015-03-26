@@ -50,17 +50,18 @@ Route::group(array('prefix' => Config::get('settings.admin_prefix')), function()
 		// assets sections/actions
 		Route::group(array('prefix' => 'assets'), function()
 		{
-			Route::get('', 				'AssetsFolderController@index');
-			Route::get('folder/{id}', 	'AssetsFolderController@show');
-			Route::post('create', 		'AssetsFolderController@create');
+			Route::get('', 					'AssetsFolderController@index');
+			Route::get('folder/{id}', 		'AssetsFolderController@show');
+			Route::post('folder/create', 	'AssetsFolderController@create');
+			Route::post('asset/create', 	'AssetController@create');
 		});
 		
 		// articles sections/actions
 		Route::group(array('prefix' => 'articles'), function()
 		{
-			Route::get('', 				'ArticleController@index');
-			Route::get('edit/{id?}', 	'ArticleController@edit');
-			Route::post('create', 		'ArticleController@create');
+			Route::get('', 					'ArticleController@index');
+			Route::get('edit/{id?}', 		'ArticleController@edit');
+			Route::post('create', 			'ArticleController@create');
 		});
 	});
 });

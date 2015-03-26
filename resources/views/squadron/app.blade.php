@@ -13,6 +13,7 @@
 	<!-- Styles -->
 	<link href="/assets/css/bootswatch.css" rel="stylesheet">
 	<link href="/assets/css/bootstrap-markdown.min.css" rel="stylesheet">
+	<link href="/assets/css/fileinput.min.css" rel="stylesheet">
 	<link href="/assets/css/squadron-admin.css" rel="stylesheet">
 
 	<!-- Scripts -->
@@ -21,6 +22,7 @@
 	<script type="text/javascript" src="/assets/js/hotkeys.js"></script>
 	<script type="text/javascript" src="/assets/js/bootstrap-markdown.js"></script>
 	<script type="text/javascript" src="/assets/js/markdown.js"></script>
+	<script type="text/javascript" src="/assets/js/fileinput.min.js"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

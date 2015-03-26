@@ -43,7 +43,7 @@
 
 <div class="admin-bar">
 	@if(Entrust::can('upload_assets'))
-		<button data-toggle="modal" data-target="#addAssetModal" data-folder-id="{{ $folder->id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset</button>
+		<button data-toggle="modal" data-target="#addAssetsModal" data-folder-id="{{ $folder->id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset(s)</button>
 	@endif
 	@if(Entrust::can('manage_asset_folders'))
 		<button data-toggle="modal" data-target="#addFolderModal" data-folder-id="{{ $folder->id }}" class="add-folder-btn btn btn-primary pull-right">Add Folder</button>
@@ -52,19 +52,18 @@
 
 @if(Entrust::can('upload_assets'))
 <!-- addAssetModal -->
-<div class="modal fade" id="addAssetModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="addAssetsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Asset</h4>
+        <h4 class="modal-title" id="myModalLabel">Add Asset(s)</h4>
       </div>
       <div class="modal-body">
-	  		
+	  	@include('squadron.assets.upload', ['folder_id' => $folder->id])
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary btn-save">Save</button>
       </div>
     </div>
   </div>
@@ -73,7 +72,7 @@
 
 @if(Entrust::can('manage_asset_folders'))
 <!-- addFolderModal -->
-<form id="folder-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/assets/create" role="form" data-toggle="validator">
+<form id="folder-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/assets/folder/create" role="form" data-toggle="validator">
 <div class="modal fade" id="addFolderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

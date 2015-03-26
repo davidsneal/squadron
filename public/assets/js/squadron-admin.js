@@ -14,10 +14,11 @@ jQuery( document ).ready( function( $ ) {
 	        // don't submit the form
 	        e.preventDefault();
 	
-	        //.....
-	        //show some spinner etc to indicate operation in progress
-	        //.....
+	        // show spinner to show save in progress
 	        $("button.btn-save").html('<i class="fa fa-spinner fa-spin"></i>');
+	        
+	        // disable all inputs
+	        $('#article-edit input textarea').prop('disabled', true);
 	 
 	        $.post(
 	            $( this ).prop( 'action' ),
@@ -44,6 +45,8 @@ jQuery( document ).ready( function( $ ) {
 	                }
 	                else
 	                {
+		                // re-enable inputs and reset save button
+		                $('#article-edit input').prop('disabled', false);
 	                    $("button.btn-save").html('Save');
 	                }
 	            },

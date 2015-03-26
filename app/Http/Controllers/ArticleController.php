@@ -9,14 +9,14 @@ use App\Article;
 use App\Seo;
 
 // laravel
+use Config;
+use DB;
+use Entrust;
+use Markdown;
+use Response;
 use Request;
 use Validator;
-use Response;
 use View;
-use Config;
-use Markdown;
-use Entrust;
-
 
 class ArticleController extends Controller {
 	
@@ -63,11 +63,11 @@ class ArticleController extends Controller {
 		}
 
 		// prepare data
-		$data = array(
-						'articles' 	=> $articles,
-						'urls' 		=> $urls,
-						'search'   	=> $search,
-				);
+		$data = [
+					'articles' 	=> $articles,
+					'urls' 		=> $urls,
+					'search'   	=> $search
+				];
 
 		// respond with the page
 		return Response::view('themes.'.Config::get('settings.active_theme').'.articles.index', $data);
@@ -89,11 +89,11 @@ class ArticleController extends Controller {
 		// article not found
 		if( ! isset($article->id))
 		{
-			return Response::json(array(
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Failed to prepare a URL for the article',
 				'alert_class' => 'alert-danger',
-				));
+				]);
 		}
 		
 		// start url variable
@@ -193,12 +193,12 @@ class ArticleController extends Controller {
 		}
 
 		// prepare data
-		$data = array(
-						'articles' => $articles,
-						'search'   => $search,
-						'orderBy'  => $orderBy,
-						'order'    => $order
-				);
+		$data = [
+					'articles' => $articles,
+					'search'   => $search,
+					'orderBy'  => $orderBy,
+					'order'    => $order
+				];
 
 		// respond with the page
 		return Response::view('squadron.articles.index', $data);
@@ -217,31 +217,31 @@ class ArticleController extends Controller {
 
 		// prepare for validation
 		$validator = Validator::make(
-		    array(
+		    [
 		    	'status' 			=> $data['status'],
 		    	'title' 			=> $data['title'],
 		    	'lead' 				=> $data['lead'],
 		    	'content' 			=> $data['content'],
 		    	'seo_title' 		=> $data['seo-title'],
 		    	'seo_description' 	=> $data['seo-description'],
-		    ),
-		    array(
+		    ],
+		    [
 		    	'status' 		=> 'required|max:9',
 		    	'title' 		=> 'required|max:150',
 		    	'lead' 			=> 'required',
 		    	'content' 		=> 'required',
 		    	'seo_title' 	=> 'max:150',
-		    )
+		    ]
 		);
 
 		// if validation fails
 		if ($validator->fails())
 		{
-			return Response::json(array(
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Posted values failed validation',
 				'alert_class' => 'alert-warning',
-				));
+				]);
 		}
 		
 		// create a uri if not set
@@ -261,11 +261,11 @@ class ArticleController extends Controller {
 		// if article title is already set
 		if(isset($article->id))
 		{
-			return Response::json(array(
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Article title already taken',
 				'alert_class' => 'alert-warning',
-				));
+				]);
 		}
 		
 		// check if the article exists already
@@ -274,12 +274,15 @@ class ArticleController extends Controller {
 		// if article uri is already set
 		if(isset($article->id))
 		{
-			return Response::json(array(
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Article URI already taken',
 				'alert_class' => 'alert-warning',
-				));
+				]);
 		}
+		
+		// begin a DB transaction so we can rollback if needed
+		DB::beginTransaction();
 		
 		// if no id is set
 		if(empty($data['id']))
@@ -312,24 +315,42 @@ class ArticleController extends Controller {
 			$seo->description 	= $data['seo-description'];
 			
 			// save the seo data too
-			$seo->save();
-			
-			// return success alert and redirect
-			return Response::json(array(
-				'status' 		=> 'success',
-				'redirect'		=> '/'.Config::get('settings.admin_prefix').'/articles/edit/'.$article->id,
-				'message' 		=> 'Article saved',
-				'alert_class' 	=> 'alert-success',
-				));
+			if($seo->save())
+			{
+				// commit to the DB
+				DB::commit();
+
+				// return success alert and redirect
+				return Response::json([
+					'status' 		=> 'success',
+					'redirect'		=> '/'.Config::get('settings.admin_prefix').'/articles/edit/'.$article->id,
+					'message' 		=> 'Article saved',
+					'alert_class' 	=> 'alert-success',
+					]);
+			}
+			// failed to save
+			else
+			{
+				// rollback so we don't save the article
+				DB::rollback();
+				
+				// return error
+				return Response::json([
+					'status' => 'error',
+					'message' => 'Failed to save the SEO data, article not saved',
+					'alert_class' => 'alert-danger',
+					]);
+			}
 		}
 		// failed to save
 		else
 		{
-			return Response::json(array(
+			// return error
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Failed to save the article',
 				'alert_class' => 'alert-danger',
-				));
+				]);
 		}
 	}
 

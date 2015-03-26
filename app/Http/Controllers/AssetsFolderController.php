@@ -9,13 +9,15 @@ use App\AssetsFolder;
 use App\Asset;
 
 // laravel
+use Config;
+use DB;
+use File;
+use Entrust;
+use Markdown;
+use Response;
 use Request;
 use Validator;
-use Response;
 use View;
-use Config;
-use Markdown;
-use Entrust;
 
 class AssetsFolderController extends Controller {
 	
@@ -94,7 +96,7 @@ class AssetsFolderController extends Controller {
 		    	'desc' 				=> $data['desc']
 		    ),
 		    array(
-		    	'parent_folder_id' 	=> 'integer|max:10',
+		    	'parent_folder_id' 	=> 'integer',
 		    	'name' 				=> 'required|max:45|unique:assets_folders',
 		    	'desc' 				=> 'max:125'
 		    )
@@ -103,12 +105,15 @@ class AssetsFolderController extends Controller {
 		// if validation fails
 		if ($validator->fails())
 		{
-			return Response::json(array(
+			return Response::json([
 				'status' => 'error',
 				'message' => 'Posted values failed validation',
 				'alert_class' => 'alert-warning',
-				));
+				]);
 		}
+		
+		// begin a DB transaction so we can rollback if needed
+		DB::beginTransaction();
 		
 		// if no id is set
 		if(empty($data['id']))
@@ -122,31 +127,83 @@ class AssetsFolderController extends Controller {
 			$folder = AssetsFolder::find($data['id']);
 		}
 		
-		// prepare data
-		$folder->parent_folder_id = (empty($data['parent-folder-id']) ? null : $data['parent-folder-id']);
-		$folder->name 			  = $data['name'];
-		$folder->desc 			  = $data['desc'];
+		// if there is a parent folder
+		if( ! empty($data['parent-folder-id']))
+		{
+			// typecast to int
+			$data['parent-folder-id'] = (int)$data['parent-folder-id'];
+			
+			// set parent folder id
+			$folder->parent_folder_id = $data['parent-folder-id'];
+			
+			// get the parent folder's filepath
+			$parent = AssetsFolder::where('id', '=', $data['parent-folder-id'])->first();
+	
+			// start with parents filepath
+			$path = $parent->dirpath;
+			
+			// finish with new folder name
+			$path.= str_slug($data['name'], "_").'/';
+			
+			// add filepath
+			$folder->dirpath = $path;
+		}
+		// there is not a parent folder
+		else
+		{
+			// force parent to null
+			$folder->parent_folder_id = null;
+			
+			// start filepath
+			$path = public_path().Config::get('settings.asset_upload_directory');
+			
+			// continue filepath
+			$path.= str_slug($data['name'], "_").'/';
+			
+			// add filepath
+			$folder->dirpath = $path;
+		}
+
+		// other variables
+		$folder->name = $data['name'];
+		$folder->desc = $data['desc'];
 		
 		// if saved successfully
 		if($folder->save())
 		{
-			// return success alert and redirect
-			return Response::json(array(
-				'status' 		=> 'success',
-				'redirect'		=> '/'.Config::get('settings.admin_prefix').'/assets/folder/'.$folder->id,
-				'message' 		=> 'Folder saved',
-				'alert_class' 	=> 'alert-success',
-				));
+			// make new directory
+			if(File::makeDirectory($path))
+			{			
+				// commit to the DB
+				DB::commit();
+				
+				// return success alert and redirect
+				return Response::json([
+					'status' 		=> 'success',
+					'redirect'		=> '/'.Config::get('settings.admin_prefix').'/assets/folder/'.$folder->id,
+					'message' 		=> 'Folder saved',
+					'alert_class' 	=> 'alert-success',
+					]);
+			}
+			// failed to make directory
+			// rollback so we don't save anything
+			DB::rollback();
+			
+			return Response::json([
+			'status' => 'error',
+			'message' => 'Failed to make the directory',
+			'alert_class' => 'alert-danger',
+			]);
 		}
 		// failed to save
-		else
-		{
-			return Response::json(array(
-				'status' => 'error',
-				'message' => 'Failed to save the folder',
-				'alert_class' => 'alert-danger',
-				));
-		}
+		// rollback so we don't save anything
+		DB::rollback();
+
+		return Response::json([
+			'status' => 'error',
+			'message' => 'Failed to save the folder',
+			'alert_class' => 'alert-danger',
+			]);
 	}
 
 	/**

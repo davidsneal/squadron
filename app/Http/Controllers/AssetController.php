@@ -69,10 +69,12 @@ class AssetController extends Controller {
 		$asset = new Asset;
 		
 		// file details
-		$file_name 		= $file->getClientOriginalName();
+		$file_name 		= str_slug($file->getClientOriginalName(), "_");
 		$file_extension = $file->getClientOriginalExtension();
-		$file_name 		= str_slug($file_name, "_").'.'.$file_extension;
 		
+		// tidy filename
+		$file_name = str_replace($file_extension, '.'.$file_extension, $file_name);
+
 		// get the folder details
 		$folder = AssetsFolder::find($folder_id);
 		
@@ -85,6 +87,8 @@ class AssetController extends Controller {
 		// move tmp file
 		if( ! @Request::file('asset-upload')->move($folder->dirpath, $file_name))
 		{
+			// rollback and return error
+			DB:rollback();
 			return Response::json(['error' => 'Failed to move the file to the upload directory']);
 		}
 	

@@ -7,25 +7,25 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" href="/">{{ Config::get('settings.site_name') }}</a>
+			<a class="navbar-brand" href="/">{{ env('site_name') }}</a>
 		</div>
 
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
-				<li><a href="/{{ Config::get('settings.articles_index') }}">Articles</a></li>
+				<li><a href="/{{ env('articles_index', 'blog') }}">Articles</a></li>
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
 				@if (Auth::guest())
-					<li><a href="/auth/login">Login</a></li>
-					@if(Config::get('settings.allow_public_registration') === true)
-						<li><a href="/auth/register">Register</a></li>
+					<li><a href="/login">Login</a></li>
+					@if(env('allow_public_registration') === true)
+						<li><a href="/register">Register</a></li>
 					@endif
 				@else
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->name }} <span class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="/auth/logout">Logout</a></li>
+							<li><a href="/logout">Logout</a></li>
 						</ul>
 					</li>
 				@endif

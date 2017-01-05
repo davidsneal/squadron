@@ -4,25 +4,25 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>{{ Config::get('settings.site_name') }}</title>
+	<title>{{ env('site_name') }}</title>
 	
 	<!-- Fonts/Icons -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 	<!-- Styles -->
-	<link href="/assets/css/bootswatch.css" rel="stylesheet">
-	<link href="/assets/css/bootstrap-markdown.min.css" rel="stylesheet">
-	<link href="/assets/css/fileinput.min.css" rel="stylesheet">
-	<link href="/assets/css/squadron-admin.css" rel="stylesheet">
+	<link href="{{ asset('css/bootswatch.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/bootstrap-markdown.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/fileinput.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/squadron-admin.css') }}" rel="stylesheet">
 
 	<!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/assets/js/hotkeys.js"></script>
-	<script type="text/javascript" src="/assets/js/bootstrap-markdown.js"></script>
-	<script type="text/javascript" src="/assets/js/markdown.js"></script>
-	<script type="text/javascript" src="/assets/js/fileinput.min.js"></script>
+	<script type="text/javascript" src="{{ asset('js/hotkeys.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/bootstrap-markdown.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/markdown.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/fileinput.min.js') }}"></script>
 
 	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -41,26 +41,20 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="/">{{ Config::get('settings.site_name') }}</a>
+				<a class="navbar-brand" href="/">{{ env('site_name') }}</a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav">
-					@if(Entrust::can('access_squadron'))
-						<li><a href="/{{ Config::get('settings.admin_prefix') }}">Base</a></li>
-					@endif
-					@if(Entrust::can('access_assets'))
-						<li><a href="/{{ Config::get('settings.admin_prefix') }}/assets">Assets</a></li>
-					@endif
-					@if(Entrust::can('access_articles'))
-						<li><a href="/{{ Config::get('settings.admin_prefix') }}/articles">Articles</a></li>
-					@endif
+					<li><a href="/{{ env('admin_prefix', 'admin') }}">Base</a></li>
+					<li><a href="/{{ env('admin_prefix', 'admin') }}/assets">Assets</a></li>
+					<li><a href="/{{ env('admin_prefix', 'admin') }}/articles">Articles</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">
-					@if (Auth::guest())
+					@if(Auth::guest())
 						<li><a href="/auth/login">Login</a></li>
-						@if(Config::get('settings.allow_public_registration') === true)
+						@if(env('allow_public_registration'))
 							<li><a href="/auth/register">Register</a></li>
 						@endif
 					@else
@@ -89,8 +83,8 @@
     </div>
     
 	<!-- extra scripts -->
-	<script type="text/javascript" src="/assets/js/squadron-admin.js"></script>
-	<script type="text/javascript" src="/assets/js/validator.js"></script>
+	<script type="text/javascript" src="{{ asset('js/squadron-admin.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/validator.js') }}"></script>
 
 </body>
 </html>

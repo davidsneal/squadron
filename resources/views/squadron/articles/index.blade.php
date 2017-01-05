@@ -38,8 +38,8 @@
 					  	@foreach($articles as $article)
 					    <tr>
 					    	<td>{{ $article->id }}</td>
-							<td><a href="/{{ Config('settings.admin_prefix') }}/articles/edit/{{ $article->id }}">{{ $article->title }}</a></td>
-							<td>{{ Carbon::parse($article->created_at)->toFormattedDateString() }}</td>
+							<td><a href="/{{ env('admin_prefix', 'admin') }}/articles/edit/{{ $article->id }}">{{ $article->title }}</a></td>
+							<td>{{ Carbon\Carbon::parse($article->created_at)->toFormattedDateString() }}</td>
 							<td>{{ $article->status }}</td>
 					    </tr>
 					    @endforeach
@@ -54,6 +54,6 @@
 </div>
 
 <div class="admin-bar">
-	<a href="/{{ Config('settings.admin_prefix') }}/articles/edit"><button class="btn btn-primary pull-right">Add new</button></a>    
+	<a href="/{{ env('admin_prefix', 'admin') }}/articles/edit"><button class="btn btn-primary pull-right">Add new</button></a>
 </div>
 @endsection

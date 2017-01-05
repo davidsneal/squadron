@@ -1,7 +1,7 @@
 @extends('squadron.app')
 
 @section('content')
-<form id="article-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/articles/create" role="form" data-toggle="validator">
+<form id="article-edit" class="form-horizontal" method="post" action="/{{ env('admin_prefix', 'admin') }}/articles/create" role="form" data-toggle="validator">
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	<input type="hidden" name="id" value="{{ $article['id'] }}">
 	<div class="container-fluid">

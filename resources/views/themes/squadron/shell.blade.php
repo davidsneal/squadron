@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ Config::get('app.locale') }}">
+<html lang="{{ env('app.locale') }}">
     <head>
         @yield('head')
     </head>

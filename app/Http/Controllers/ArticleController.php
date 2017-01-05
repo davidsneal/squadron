@@ -5,14 +5,13 @@ use App\Http\Controllers\Controller;
 
 // squadron
 use App\Helpers\Squadron;
-use App\Article;
-use App\Seo;
+use App\Models\Article;
+use App\Models\Seo;
 
 // laravel
 use Config;
 use DB;
-use Entrust;
-use Markdown;
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Response;
 use Request;
 use Validator;
@@ -31,25 +30,21 @@ class ArticleController extends Controller {
 		$search = Request::input('search');
 		
 		// if a search isset an not empty
-		if(isset($search) AND ! empty($search))
-		{
+		if(isset($search) AND ! empty($search)) {
 			// get articles and paginate
 			$articles = Article::where('status', '=', 'Published')
 							   ->where('title', 'LIKE', '%'.$search.'%')
 							   ->orWhere('lead', 'LIKE', '%'.$search.'%')
 							   ->orderBy('created_at', 'desc')
-							   ->paginate(Config::get('settings.articles_per_page'));
+							   ->paginate(env('articles_per_page', 10));
 			
 			// append pagination links to maintain search   
 			$articles->appends(['search' => $search]);
-		}
-		// no search set
-		else
-		{
+		} else { // no search set
 			// get articles and paginate
 			$articles = Article::where('status', '=', 'Published')
 							   ->orderBy('created_at', 'desc')
-							   ->paginate(Config::get('settings.articles_per_page'));
+							   ->paginate(env('articles_per_page', 10));
 		}
 		
 		// empty array of urls
@@ -70,13 +65,11 @@ class ArticleController extends Controller {
 				];
 
 		// respond with the page
-		return Response::view('themes.'.Config::get('settings.active_theme').'.articles.index', $data);
+		return Response::view('themes.'.env('active_theme', 'squadron').'.articles.index', $data);
 	}
 	
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
+	 * Get the url of an article
 	 */
 	public function get_url($id = 0)
 	{
@@ -100,17 +93,16 @@ class ArticleController extends Controller {
 		$url = '/';
 		
 		// get articles index
-		$index = Config::get('settings.articles_index');
+		$index = env('articles_index', 'blog');
 		
 		// if the index isn't empty
-		if( ! empty($index))
-		{
+		if( ! empty($index)) {
 			// add it to the url
 			$url .= $index.'/';
 		}
 		
 		// switch based on article_url_structure
-		switch(Config::get('settings.article_url_structure'))
+		switch(env('article_url_structure', '{year}/{month}/{uri}'))
 		{
 			case '{year}/{month}/{uri}':
 			default:
@@ -140,8 +132,8 @@ class ArticleController extends Controller {
 	public function index()
 	{
 		// access check
-		if( ! Entrust::can('access_articles'))
-			return Squadron::permissionsError('access_articles');
+//		if( ! Entrust::can('access_articles'))
+//			return Squadron::permissionsError('access_articles');
 
 		// get inputs
 		$search  = Request::input('search');
@@ -395,14 +387,11 @@ class ArticleController extends Controller {
 		];
 
 		// show article
-		return response()->view('themes.'.Config::get('settings.admin_prefix').'.articles.view', $data); 
+		return response()->view('themes.'.env('active_theme', 'squadron').'.articles.view', $data);
 	}
 
 	/**
 	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
 	 */
 	public function show_YMU($year = 0, $month = 0, $uri = 0)
 	{
@@ -410,8 +399,7 @@ class ArticleController extends Controller {
 		$article = Article::getByYMU($year, $month, $uri);
 
 		// 404 if article uri is not found or not published
-		if( ! isset($article->id) OR $article->status != 'Published')
-		{
+		if(! isset($article->id) OR $article->status != 'Published') {
 			abort(404);
 		}
 
@@ -429,7 +417,7 @@ class ArticleController extends Controller {
 		];
 
 		// show article
-		return response()->view('themes.'.Config::get('settings.admin_prefix').'.articles.view', $data); 
+		return response()->view('themes.'.env('active_theme', 'squadron').'.articles.view', $data);
 	}
 
 	/**
@@ -441,8 +429,8 @@ class ArticleController extends Controller {
 	public function edit($id = 0)
 	{
 		// access check
-		if( ! Entrust::can('manage_draft_articles'))
-			return Squadron::permissionsError('manage_draft_articles');
+//		if(! Entrust::can('manage_draft_articles'))
+//			return Squadron::permissionsError('manage_draft_articles');
 
 		// typecast if needed
 		$id = (int) $id;
@@ -464,7 +452,7 @@ class ArticleController extends Controller {
 			return response()->view('squadron.articles.edit', $data);
 		}
 		// editing existing
-		elseif( ! empty($article))
+		elseif(! empty($article))
 		{
 			// get seo data
 			$seo = Seo::get_by_article($id);

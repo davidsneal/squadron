@@ -21,7 +21,7 @@
 	<div class="row">
 		<div class="col-lg-10 col-lg-offset-1">
 			<h1>{{ $article->title }}</h1>
-			<p class="text-muted"><time pubdate datetime="{{ $article->created_at }}">{{ Carbon::parse($article->created_at)->toFormattedDateString() }}</time></p>
+			<p class="text-muted"><time pubdate datetime="{{ $article->created_at }}">{{ Carbon\Carbon::parse($article->created_at)->toFormattedDateString() }}</time></p>
 			<p class="lead">{{ $article->lead }}</p>
 		</div>
 	</div>
@@ -37,6 +37,6 @@
 
 @if(Auth::check())
 	@section('footer_button')
-		<a href="/{{ Config::get('settings.admin_prefix') }}/articles/edit/{{ $article->id }}"><button type="button" class="btn btn-primary pull-right">Edit</button></a>
+		<a href="/{{ env('admin_prefix', 'admin') }}/articles/edit/{{ $article->id }}"><button type="button" class="btn btn-primary pull-right">Edit</button></a>
 	@endsection
 @endif

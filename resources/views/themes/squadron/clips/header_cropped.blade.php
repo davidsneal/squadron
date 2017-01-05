@@ -2,7 +2,7 @@
 	<div class="header-content">
 		<div class="header-icon">
 			<a href="/">
-				<img src="{{ Config::get('settings.site_logo') }}" alt="{{ Config::get('settings.site_logo_alt') }}" />
+				<img src="{{ env('site_logo', asset('img/squadron_icon_white.png')) }}" alt="{{ env('site_logo_alt', 'Squadron') }}" />
 			</a>
 		</div>
 		<div class="feature-title">

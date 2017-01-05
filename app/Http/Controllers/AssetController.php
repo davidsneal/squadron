@@ -5,8 +5,8 @@ use App\Http\Controllers\Controller;
 
 
 // squadron
-use App\AssetsFolder;
-use App\Asset;
+use App\Models\AssetsFolder;
+use App\Models\Asset;
 
 // laravel
 use Config;

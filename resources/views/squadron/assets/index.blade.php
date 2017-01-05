@@ -23,10 +23,10 @@
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2">
 			<ul class="breadcrumb">
-				<li><a href="/{{ Config('settings.admin_prefix') }}/assets">Assets</a></li> 
+				<li><a href="/{{ env('admin_prefix', 'admin') }}/assets">Assets</a></li>
 				@foreach($parents as $name => $id)
 					@if($id !== $folder->id)
-						<li><a href="/{{ Config('settings.admin_prefix') }}/assets/folder/{{ $id }}">{{ $name }}</a></li>
+						<li><a href="/{{ env('admin_prefix', 'admin') }}/assets/folder/{{ $id }}">{{ $name }}</a></li>
 					@else
 						<li class="active">{{ $name }}</li>
 					@endif
@@ -42,15 +42,10 @@
 </div>
 
 <div class="admin-bar">
-	@if(Entrust::can('upload_assets'))
-		<button data-toggle="modal" data-target="#addAssetsModal" data-folder-id="{{ $folder->id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset(s)</button>
-	@endif
-	@if(Entrust::can('manage_asset_folders'))
-		<button data-toggle="modal" data-target="#addFolderModal" data-folder-id="{{ $folder->id }}" class="add-folder-btn btn btn-primary pull-right">Add Folder</button>
-	@endif
+	<button data-toggle="modal" data-target="#addAssetsModal" data-folder-id="{{ $folder->id }}" class="add-asset-btn btn btn-primary pull-right">Add Asset(s)</button>
+	<button data-toggle="modal" data-target="#addFolderModal" data-folder-id="{{ $folder->id }}" class="add-folder-btn btn btn-primary pull-right">Add Folder</button>
 </div>
 
-@if(Entrust::can('upload_assets'))
 <!-- addAssetModal -->
 <div class="modal fade" id="addAssetsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -68,11 +63,9 @@
     </div>
   </div>
 </div>
-@endif
 
-@if(Entrust::can('manage_asset_folders'))
 <!-- addFolderModal -->
-<form id="folder-edit" class="form-horizontal" method="post" action="/{{ Config::get('settings.admin_prefix') }}/assets/folder/create" role="form" data-toggle="validator">
+<form id="folder-edit" class="form-horizontal" method="post" action="/{{ env('admin_prefix', 'admin') }}/assets/folder/create" role="form" data-toggle="validator">
 <div class="modal fade" id="addFolderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -108,5 +101,4 @@
   </div>
 </div>
 </form>
-@endif
 @endsection

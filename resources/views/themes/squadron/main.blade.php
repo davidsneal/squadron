@@ -11,15 +11,15 @@
     <title>@yield('title')</title>
 
     <!-- Styles -->
-	<link href="/assets/css/bootswatch.css" rel="stylesheet">
-	<link href="/assets/css/squadron-theme.css" rel="stylesheet">
+	<link href="{{ asset('css/bootswatch.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/squadron-theme.css') }}" rel="stylesheet">
 	<!-- Fonts/icons -->
 	<link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
 	
 	 <!-- Scripts -->
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
-	<script src="/assets/js/squadron.js"></script>
+	<script src="{{ asset('js/squadron.js') }}"></script>
 
     @yield('extra_styles')
     

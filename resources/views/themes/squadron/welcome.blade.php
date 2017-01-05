@@ -1,11 +1,11 @@
 @extends('themes.squadron.main')
 
 @section('title')
-{{ Config::get('settings.site_name') }}
+{{ env('site_name') }}
 @endsection
 
 @section('header')
-	@include('themes.squadron.clips.header_large', ['heading' => $heading])
+	@include('themes.squadron.clips.header_large', ['heading' => env('site_name')])
 @endsection
 
 @section('navbar')

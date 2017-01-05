@@ -5,8 +5,8 @@ use App\Http\Controllers\Controller;
 
 // squadron
 use App\Helpers\Squadron;
-use App\AssetsFolder;
-use App\Asset;
+use App\Models\AssetsFolder;
+use App\Models\Asset;
 
 // laravel
 use Config;
@@ -32,8 +32,8 @@ class AssetsFolderController extends Controller {
 	public function index()
 	{
 		// access check
-		if( ! Entrust::can('access_assets'))
-			return Squadron::permissionsError('access_assets');
+//		if( ! Entrust::can('access_assets'))
+//			return Squadron::permissionsError('access_assets');
 			
 		// get search input
 		$search = Request::input('search');
@@ -128,8 +128,7 @@ class AssetsFolderController extends Controller {
 		}
 		
 		// if there is a parent folder
-		if( ! empty($data['parent-folder-id']))
-		{
+		if($data['parent-folder-id']) {
 			// typecast to int
 			$data['parent-folder-id'] = (int)$data['parent-folder-id'];
 			
@@ -138,7 +137,7 @@ class AssetsFolderController extends Controller {
 			
 			// get the parent folder's filepath
 			$parent = AssetsFolder::where('id', '=', $data['parent-folder-id'])->first();
-	
+
 			// start with parents filepath
 			$dirpath = $parent->dirpath;
 			
@@ -150,15 +149,12 @@ class AssetsFolderController extends Controller {
 			
 			// add public path
 			$folder->publicpath = $parent->publicpath.str_slug($data['name'], "_").'/';
-		}
-		// there is not a parent folder
-		else
-		{
-			// force parent to null
+		} else { // there is not a parent folder
+ 			// force parent to null
 			$folder->parent_folder_id = null;
 			
 			// start filepath
-			$dirpath = public_path().Config::get('settings.asset_upload_directory');
+			$dirpath = public_path(env('asset_upload_directory', 'uploads'));
 			
 			// continue filepath
 			$dirpath.= str_slug($data['name'], "_").'/';
@@ -167,7 +163,7 @@ class AssetsFolderController extends Controller {
 			$folder->dirpath = $dirpath;
 			
 			// add public path
-			$folder->publicpath = Config::get('settings.asset_upload_directory').str_slug($data['name'], "_").'/';
+			$folder->publicpath = env('asset_upload_directory', 'uploads').str_slug($data['name'], "_").'/';
 		}
 
 		// other variables
@@ -175,10 +171,9 @@ class AssetsFolderController extends Controller {
 		$folder->desc = $data['desc'];
 		
 		// if saved successfully
-		if($folder->save())
-		{
+		if($folder->save()) {
 			// make new directory
-			if(@File::makeDirectory($dirpath))
+			if(File::makeDirectory($dirpath))
 			{			
 				// commit to the DB
 				DB::commit();
@@ -186,7 +181,7 @@ class AssetsFolderController extends Controller {
 				// return success alert and redirect
 				return Response::json([
 					'status' 		=> 'success',
-					'redirect'		=> '/'.Config::get('settings.admin_prefix').'/assets/folder/'.$folder->id,
+					'redirect'		=> '/'.env('admin_prefix').'/assets/folder/'.$folder->id,
 					'message' 		=> 'Folder saved',
 					'alert_class' 	=> 'alert-success',
 					]);
@@ -197,7 +192,7 @@ class AssetsFolderController extends Controller {
 			
 			return Response::json([
 			'status' => 'error',
-			'message' => 'Failed to make the directory',
+			'message' => 'Failed to make the directory'. $dirpath,
 			'alert_class' => 'alert-danger',
 			]);
 		}
@@ -231,8 +226,8 @@ class AssetsFolderController extends Controller {
 	public function show($id)
 	{
 		// access check
-		if( ! Entrust::can('access_assets'))
-			return Squadron::permissionsError('access_assets');
+//		if( ! Entrust::can('access_assets'))
+//			return Squadron::permissionsError('access_assets');
 			
 		// get the folder being viewed
 		$folder = AssetsFolder::find($id);
@@ -262,9 +257,6 @@ class AssetsFolderController extends Controller {
 	
 	/**
 	 * Get an array of parent folders
-	 *
-	 * @param  int  $id
-	 * @return Response
 	 */
 	private function getParents($folder_id)
 	{
